@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EntryType } from "../../types/entryType";
 import { deleteEntry, getEntry } from "../../services/entries";
 
@@ -31,7 +31,9 @@ const initialState: EntryState = {
 const entrySlice = createSlice({
   name: 'entry',
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEntry.pending, (state) => {

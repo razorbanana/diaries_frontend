@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EntryType } from "../../types/entryType";
 import { getDiaryEntries } from "../../services/diaries";
 
@@ -24,7 +24,11 @@ const initialState: DiaryEntriesState = {
 const diaryEntriesSlice = createSlice({
   name: 'diaryEntries',
   initialState,
-  reducers: {},
+  reducers: {
+    addEntry: (state, action: PayloadAction<{ entry: EntryType }>) => {
+      state.entries = state.entries.concat(action.payload.entry);
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDiaryEntries.pending, (state) => {
@@ -43,5 +47,7 @@ const diaryEntriesSlice = createSlice({
       });
   },
 });
+
+export const { addEntry } = diaryEntriesSlice.actions;
 
 export default diaryEntriesSlice.reducer;
