@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EntryType } from "../../types/entryType";
 import { getDiaryEntries } from "../../services/diaries";
 
-export const fetchDiaryEntries: any = createAsyncThunk('diaries/fetchDiaryEntries', async (id:string) => {
+export const fetchDiaryEntries: any = createAsyncThunk('diaryEntries/fetchDiaryEntries', async (id:string) => {
     const response = await getDiaryEntries(id)
     console.log(`response in fetchDiaryEntries`)
     console.log(response)

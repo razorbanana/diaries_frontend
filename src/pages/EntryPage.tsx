@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
-import { EntryState, fetchEntry } from "../app/entry/entrySlice";
+import { useNavigate, useParams } from "react-router-dom"
+import { delEntry, EntryState, fetchEntry } from "../app/entry/entrySlice";
 
 export const EntryPage = () => {
+    const navigate = useNavigate();
     const { id } = useParams<{id: string}>();
     console.log(`id is ${id}`)
     const dispatch = useDispatch();
@@ -31,6 +32,11 @@ export const EntryPage = () => {
             {entry.title} 
             <p>{entry.content}</p>
             </div>
+            <button onClick={()=>{
+                console.log(`deleting entry ${id}`)
+                dispatch(delEntry(id))
+                navigate("/my-diaries")
+            }}>Delete Entry</button>
         </div>
     );
 }

@@ -5,3 +5,9 @@ export const getEntry = async (id: string) => {
     const response = await api.get(`/entries/single/${id}`);
     return response.data;
 }
+
+export const deleteEntry = async (id: string) => {
+    console.log("DELETE /entries/single/{id}")
+    const response = await api.delete(`/entries/single/${id}`);
+    return response.data;
+}
