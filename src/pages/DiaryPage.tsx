@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
-import { DiaryEntriesState, fetchDiaryEntries } from "../app/diary/diaryEntriesSlice";
+import { useNavigate, useParams } from "react-router-dom"
+import { DiaryEntriesState, fetchDiaryEntries } from "../app/diaryEntries/diaryEntriesSlice";
 import { EntryType } from "../types/entryType";
 
 export const DiaryPage = () => {
@@ -34,12 +34,14 @@ export const DiaryPage = () => {
 }
 
 const Entry = ({ entry }: {entry: EntryType}) => {
+    const navigate = useNavigate()
     return(
         <div>
             <div>
             {entry.title} 
             <p>{entry.content}</p>
             </div>
+            <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
         </div>
     )
 }

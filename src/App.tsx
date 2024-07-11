@@ -7,6 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
 import { ProfilePage } from './pages/ProfilePage'
 import { DiaryPage } from './pages/DiaryPage'
+import { EntryPage } from './pages/EntryPage'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
               <Route path="/home" element={<HomePage />} /> 
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/diary/:id" element={<DiaryPage />} />
+              <Route path="/entry/:id" element={<EntryPage />} />
           </Routes> 
         </Router> 
       </div>

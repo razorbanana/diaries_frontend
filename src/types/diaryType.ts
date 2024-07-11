@@ -1,5 +1,5 @@
 export type DiaryType = {
-        id: number;
+        id: string;
         title: string;
         description: string;
         isPrivate: boolean;
