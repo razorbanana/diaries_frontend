@@ -5,7 +5,6 @@ export const Topper = ({setToken} : setStateType) => {
     const navigate = useNavigate()
     return (
         <div>
-            <h1>Topper</h1>
             <TopperButton text="My Diaries" onClickFunction={() => {
                 navigate("/my-diaries")
             }}/>

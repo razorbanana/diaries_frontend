@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { DiaryType } from "../types/diaryType";
 import { useDispatch, useSelector } from "react-redux";
 import { DiariesState, fetchDiaries } from "../app/diaries/diariesSlice";
