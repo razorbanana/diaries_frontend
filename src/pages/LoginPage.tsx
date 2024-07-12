@@ -68,13 +68,13 @@ export const LoginPage = () => {
 
     if (loginVisibility) {
         return (
-            <div>
+            <div className="Page">
                 <LoginForm  handleInputChange={handleLoginInputChange} handleFormReset={handleLoginFormReset} username={loginUsername} password={loginPassword} handleLogin={handleLogin} handleToggle={handleToggle}/>
             </div>
         ); 
     }
     return (
-        <div>
+        <div className="Page">
             <RegisterForm  handleInputChange={handleRegisterInputChange} handleFormReset={handleRegisterFormReset} username={registerUsername} email={registerEmail} password={registerPassword} handleRegister={handleRegister} handleToggle={handleToggle}/>
         </div>
     ); 
@@ -82,26 +82,45 @@ export const LoginPage = () => {
 
 const LoginForm = ({handleInputChange, handleFormReset, username, password, handleLogin, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, username: string, password: string, handleLogin: ()=>void, handleToggle: ()=>void} ) => {
     return (
-        <div>
-            <input type="text" name="username" placeholder="Username or email" onChange={handleInputChange} value={username}/>
-            <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
-            <button onClick={handleFormReset}>Reset Form</button>
-            <button onClick={handleLogin}>Submit</button>
-            <p>Or maybe...</p>
-            <button onClick={handleToggle}>Register</button>
+        <div className="FormContainer">
+            <div className="InputContainer">
+                <input type="text" name="username" placeholder="Username or email" onChange={handleInputChange} value={username}/>
+            </div>
+            <div className="InputContainer">
+                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
+            </div>
+            <div className="ButtonsContainer">
+                <button onClick={handleFormReset}>Reset Form</button>
+                <button onClick={handleLogin}>Submit</button>
+            </div>
+            <div>
+                <p>Or maybe...</p>
+                <button onClick={handleToggle}>Register</button>
+            </div>
         </div>
     )
 }
 
 const RegisterForm = ({handleInputChange, handleFormReset, username, email, password, handleRegister, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, username: string, email: string, password: string, handleRegister: ()=>void, handleToggle: ()=>void} ) => {
     return (
-        <div>
-            <input type="text" name="username" placeholder="Username" onChange={handleInputChange} value={username}/><input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={email}/>
-            <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
-            <button onClick={handleFormReset}>Reset Form</button>
-            <button onClick={handleRegister}>Submit</button>
-            <p>Or maybe...</p>
-            <button onClick={handleToggle}>Log in</button>
+        <div className="FormContainer">
+            <div className="InputContainer">
+                <input type="text" name="username" placeholder="Username" onChange={handleInputChange} value={username}/>
+            </div>
+            <div className="InputContainer">
+                <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={email}/>
+            </div>
+            <div className="InputContainer">
+                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
+            </div>
+            <div className="ButtonsContainer">
+                <button onClick={handleFormReset}>Reset Form</button>
+                <button onClick={handleRegister}>Submit</button>
+            </div>
+            <div>
+                <p>Or maybe...</p>
+                <button onClick={handleToggle}>Log in</button>
+            </div>
         </div>
     )
 }

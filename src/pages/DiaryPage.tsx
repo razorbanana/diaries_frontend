@@ -51,34 +51,50 @@ export const DiaryPage = () => {
     if (loading || entries === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     return (
-        <div>
+        <div className="Page">
             {isVisible ? <EntryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
             <ToggleFormButton onClick={handleFormToggle}/>
-            {entries.map((entry) => <Entry key={entry.id} entry={entry}/>)}
+            <EntryList entries={entries}/>
         </div>
     );
+}
+
+const EntryList = ({ entries }: {entries: EntryType[]}) => {
+    return(
+        <div className="EntityList">
+            {entries.map((entry) => <Entry key={entry.id} entry={entry}/>)}
+        </div>
+    )
 }
 
 const Entry = ({ entry }: {entry: EntryType}) => {
     const navigate = useNavigate()
     return(
-        <div>
+        <div className="EntityContainer">
             <div>
             {entry.title} 
             <p>{entry.content}</p>
             </div>
-            <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
+            <div className="ButtonsContainer">
+                <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
+            </div>
         </div>
     )
 }
 
 const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: FormData, handleCreatingEntry: ()=>void} ) => {
     return (
-        <div>
-            <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
-            <input type="text" name="content" placeholder="Content" onChange={handleInputChange} value={formData.content}/>
-            <button onClick={handleFormReset}>Reset Form</button>
-            <button onClick={handleCreatingEntry}>Submit</button>
+        <div className="FormContainer">
+            <div className="InputContainer">
+                <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
+            </div>
+            <div className="InputContainer">
+                <input type="textarea" name="content" placeholder="Content" onChange={handleInputChange} value={formData.content}/>
+            </div>
+            <div className="ButtonsContainer">
+                <button onClick={handleFormReset}>Reset Form</button>
+                <button onClick={handleCreatingEntry}>Submit</button>
+            </div>
         </div>
     )
 }

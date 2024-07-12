@@ -28,7 +28,7 @@ function App() {
     return <LoginPage/>
   }else{
     return (
-      <div>
+      <div className='App'>
         <Router> 
           <Topper/>
           <Routes> 

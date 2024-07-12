@@ -6,7 +6,7 @@ export const Topper = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     return (
-        <div>
+        <div className="Topper">
             <TopperButton text="My Diaries" onClickFunction={() => {
                 navigate("/my-diaries")
             }}/>

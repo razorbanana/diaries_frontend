@@ -24,19 +24,25 @@ export const EntryPage = () => {
         dispatch(fetchEntry(id));
     }, [dispatch]);
     
+    const handleDelete = () => {
+        console.log(`deleting entry ${id}`)
+        dispatch(delEntry(id))
+        navigate("/my-diaries")
+    }
+
     if (loading || entry === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     return (
-        <div>
-            <div>
-            {entry.title} 
-            <p>{entry.content}</p>
+        <div className="Page">
+            <div className="EntityContainer">
+                <div>
+                    {entry.title} 
+                    <p>{entry.content}</p>
+                </div>
+                <div className="ButtonsContainer">
+                    <button onClick={handleDelete}>Delete Entry</button>
+                </div>
             </div>
-            <button onClick={()=>{
-                console.log(`deleting entry ${id}`)
-                dispatch(delEntry(id))
-                navigate("/my-diaries")
-            }}>Delete Entry</button>
         </div>
     );
 }

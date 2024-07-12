@@ -54,7 +54,7 @@ export const MyDiariesPage = () => {
     }
 
     return (
-        <div>
+        <div className="Page">
             {isVisible ? <DiaryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
             <ToggleFormButton onClick={handleFormToggle}/>
             <DiaryList diaries={diaries}/>
@@ -64,18 +64,25 @@ export const MyDiariesPage = () => {
 
 const DiaryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: DiaryFormData, handleCreatingEntry: ()=>void} ) => {
     return (
-        <div>
-            <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
-            <input type="text" name="description" placeholder="Description" onChange={handleInputChange} value={formData.description}/>
-            <button onClick={handleFormReset}>Reset Form</button>
-            <button onClick={handleCreatingEntry}>Submit</button>
+        <div className="FormContainer">
+            <div className="InputContainer">
+                <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
+            </div>
+            <div className="InputContainer">
+                <input type="text" name="description" placeholder="Description" onChange={handleInputChange} value={formData.description}/>
+            </div>
+            <div className="ButtonsContainer">
+                <button onClick={handleFormReset}>Reset Form</button>
+                <button onClick={handleCreatingEntry}>Submit</button>
+            </div>
+            
         </div>
     )
 }
 
 const DiaryList = ({diaries}: {diaries: DiaryType[]}) => {
     return (
-        <div>
+        <div className="EntityList">
             {diaries.map((diary) => <Diary key={diary.id} diary={diary}/>)}
         </div>
     );
@@ -85,13 +92,15 @@ const Diary = ({ diary }: {diary: DiaryType}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     return(
-        <div>
+        <div className="EntityContainer">
             <div>
             {diary.title} {diary.isPrivate ? "Private" : "Public"}
             <p>{diary.description}</p>
             </div>
-            <button onClick={() => {navigate(`/diary/${diary.id}`)}}>Read Diary</button>
-            <button onClick={() => {dispatch(delDiary(diary.id))}}>Delete Diary</button>
+            <div className="ButtonsContainer">
+                <button onClick={() => {navigate(`/diary/${diary.id}`)}}>Read Diary</button>
+                <button onClick={() => {dispatch(delDiary(diary.id))}}>Delete Diary</button>
+            </div>
         </div>
     )
 }
