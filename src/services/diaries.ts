@@ -17,3 +17,9 @@ export const createDiary = async (data: {title: string, description: string}) =>
   const response = await api.post(`/diaries/my`, data);
   return response.data;
 }
+
+export const deleteDiary = async (id: string) => {
+  console.log(`DELETE /diaries/my/${id}`)
+  const response = await api.delete(`/diaries/my/${id}`);
+  return response.data;
+}

@@ -1,7 +1,7 @@
 import { useEffect} from "react";
 import { DiaryType } from "../types/diaryType";
 import { useDispatch, useSelector } from "react-redux";
-import { DiariesState, fetchDiaries, addDiary } from "../app/diaries/diariesSlice";
+import { DiariesState, fetchDiaries, addDiary, delDiary } from "../app/diaries/diariesSlice";
 import { useNavigate } from "react-router-dom";
 import { ToggleFormButton } from "../components/ToggleButton";
 import { toggleDiaryFormVisibility, setDiaryFormData, resetDiaryForm, DiaryFormState, DiaryFormData } from "../app/forms/diaryFormSlice";
@@ -83,6 +83,7 @@ const DiaryList = ({diaries}: {diaries: DiaryType[]}) => {
 
 const Diary = ({ diary }: {diary: DiaryType}) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
     return(
         <div>
             <div>
@@ -90,6 +91,7 @@ const Diary = ({ diary }: {diary: DiaryType}) => {
             <p>{diary.description}</p>
             </div>
             <button onClick={() => {navigate(`/diary/${diary.id}`)}}>Read Diary</button>
+            <button onClick={() => {dispatch(delDiary(diary.id))}}>Delete Diary</button>
         </div>
     )
 }
