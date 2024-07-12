@@ -1,8 +1,10 @@
-import { setStateType } from "../types/setStateType";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
+import { setToken } from "../app/user/userSlice";
 
-export const Topper = ({setToken} : setStateType) => {
+export const Topper = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
         <div>
             <TopperButton text="My Diaries" onClickFunction={() => {
@@ -16,7 +18,7 @@ export const Topper = ({setToken} : setStateType) => {
             }}/>
             <TopperButton text="Log Out" onClickFunction={() => {
                 console.log("LogOut")
-                setToken("undefined")
+                dispatch(setToken('undefined'))
                 localStorage.setItem('token', 'undefined')    
             }}/>
         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect} from 'react'
 import './App.css'
 import { LoginPage } from './pages/LoginPage'
 import { Topper } from './components/Topper'
@@ -8,19 +8,29 @@ import { HomePage } from './pages/HomePage'
 import { ProfilePage } from './pages/ProfilePage'
 import { DiaryPage } from './pages/DiaryPage'
 import { EntryPage } from './pages/EntryPage'
+import { useDispatch, useSelector } from 'react-redux'
+import { setToken, UserState } from './app/user/userSlice'
 
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'))
+  const dispatch = useDispatch();
+  const token = useSelector((state: {user: UserState}) => state.user.token);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(setToken(token));
+    }
+  }, [])
 
   console.log(`token is ${token}`)
   if (token === 'undefined') {
-    return <LoginPage setToken={setToken}/>
+    return <LoginPage/>
   }else{
     return (
       <div>
         <Router> 
-          <Topper setToken={setToken}/>
+          <Topper/>
           <Routes> 
               <Route path="/my-diaries" element={<MyDiariesPage />} /> 
               <Route path="/home" element={<HomePage />} /> 
