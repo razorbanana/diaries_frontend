@@ -19,7 +19,8 @@ export const Topper = () => {
             <TopperButton text="Log Out" onClickFunction={() => {
                 console.log("LogOut")
                 dispatch(setToken('undefined'))
-                localStorage.setItem('token', 'undefined')    
+                localStorage.setItem('token', 'undefined')  
+                navigate("/my-diaries")  
             }}/>
         </div>
     );

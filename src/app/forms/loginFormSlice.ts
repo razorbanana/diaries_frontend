@@ -7,6 +7,7 @@ interface LoginFormEntries {
 
 export interface LoginFormState {
     entries: LoginFormEntries;
+    isVisible: boolean;
 }
 
 const initialState: LoginFormState = {
@@ -14,6 +15,7 @@ const initialState: LoginFormState = {
         username: '',
         password: '',
     },
+    isVisible: true,
 };
 
 const loginFormSlice = createSlice({
@@ -29,9 +31,12 @@ reducers: {
     resetLoginForm: (state) => {
         state.entries = { ...initialState.entries };
     },
+    toggleLoginForm: (state) => {
+        state.isVisible = !state.isVisible;
+    }
 },
 });
 
-export const { setLoginFormData, resetLoginForm } = loginFormSlice.actions;
+export const { setLoginFormData, resetLoginForm, toggleLoginForm } = loginFormSlice.actions;
 
 export default loginFormSlice.reducer;
