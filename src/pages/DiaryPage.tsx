@@ -5,26 +5,18 @@ import { DiaryEntriesState, fetchDiaryEntries, addEntry } from "../app/diaryEntr
 import { EntryType } from "../types/entryType";
 import { resetForm, setFormData, toggleFormVisibility, FormData, EntryFormState } from "../app/forms/entryFormSlice";
 import { createEntry } from "../services/entries";
+import { ToggleFormButton } from "../components/ToggleButton";
 
 export const DiaryPage = () => {
     const { id } = useParams<{id: string}>();
     console.log(`id is ${id}`)
     if (id === undefined) return <p>Diary not found</p>;
     const dispatch = useDispatch();
-    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {
-        console.log(`state in DiaryPage`)
-        console.log(state)
-        return state.diaryEntries.entries || [];
-    });
+    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {return state.diaryEntries.entries || [];});
     const loading = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.loading);
     const error = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.error);
     const isVisible = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.isVisible);
     const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData || {title:'', content:''});
-    console.log(`entries are ${entries}`)
-    console.log(`loading is ${loading}`)
-    console.log(`error is ${error}`)
-    console.log(`formData is`)
-    console.log(formData)
 
     useEffect(() => {
         console.log("fetching diary entries")
@@ -47,8 +39,6 @@ export const DiaryPage = () => {
 
       const handleCreatingEntry = async () => {
         const response = await createEntry(id, formData)
-        console.log(`CREATION RESPONSE`)
-        console.log(response)
         const newEntry = {
             id: response.id,
             title: response.title,
@@ -79,12 +69,6 @@ const Entry = ({ entry }: {entry: EntryType}) => {
             </div>
             <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
         </div>
-    )
-}
-
-const ToggleFormButton = ({onClick}: {onClick: () => void}) => {
-    return(
-        <button onClick={onClick}>Toggle form</button>
     )
 }
 

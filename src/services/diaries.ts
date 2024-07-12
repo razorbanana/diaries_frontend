@@ -11,3 +11,9 @@ export const getDiaryEntries = async (id: string) => {
   const response = await api.get(`/entries/${id}`);
   return response.data;
 }
+
+export const createDiary = async (data: {title: string, description: string}) => {
+  console.log("POST /diaries/my")
+  const response = await api.post(`/diaries/my`, data);
+  return response.data;
+}
