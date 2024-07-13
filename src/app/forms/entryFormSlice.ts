@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface FormData {
+export interface EntryFormData {
   title: string;
   content: string;
 }
 
 export interface EntryFormState {
-  formData: FormData;
+  formData: EntryFormData;
   isVisible: boolean;
 }
 
@@ -22,20 +22,24 @@ const entryFormSlice = createSlice({
   name: 'entryForm',
   initialState,
   reducers: {
-    setFormData: (state, action: PayloadAction<{ name: string; value: string }>) => {
+    setEntryFormData: (state, action: PayloadAction<{ name: string; value: string }>) => {
       const { name, value } = action.payload;
       state.formData = { ...state.formData, [name]: value};
     },
-    toggleFormVisibility: (state) => {
+    toggleEntryFormVisibility: (state) => {
       state.isVisible = !state.isVisible;
     },
-    resetForm: (state) => {
+    resetEntryForm: (state) => {
       state.formData = { ...initialState.formData };
     },
+    hideEntryForm: (state) => {
+      state.formData = { ...initialState.formData }
+      state.isVisible = false;
+    }
   },
 });
 
-export const { setFormData, toggleFormVisibility, resetForm } = entryFormSlice.actions;
+export const { setEntryFormData, toggleEntryFormVisibility, resetEntryForm, hideEntryForm } = entryFormSlice.actions;
 
 export default entryFormSlice.reducer;
 

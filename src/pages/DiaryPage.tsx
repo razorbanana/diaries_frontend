@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { DiaryEntriesState, fetchDiaryEntries, addEntry } from "../app/diaryEntries/diaryEntriesSlice";
 import { EntryType } from "../types/entryType";
-import { resetForm, setFormData, toggleFormVisibility, FormData, EntryFormState } from "../app/forms/entryFormSlice";
+import { resetEntryForm, setEntryFormData, toggleEntryFormVisibility, EntryFormData, EntryFormState } from "../app/forms/entryFormSlice";
 import { createEntry } from "../services/entries";
 import { ToggleFormButton } from "../components/ToggleButton";
 
@@ -26,15 +26,15 @@ export const DiaryPage = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
-        dispatch(setFormData({ name, value }));
+        dispatch(setEntryFormData({ name, value }));
       };
     
       const handleFormToggle = () => {
-        dispatch(toggleFormVisibility());
+        dispatch(toggleEntryFormVisibility());
       };
     
       const handleFormReset = () => {
-        dispatch(resetForm());
+        dispatch(resetEntryForm());
       };
 
       const handleCreatingEntry = async () => {
@@ -82,7 +82,7 @@ const Entry = ({ entry }: {entry: EntryType}) => {
     )
 }
 
-const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: FormData, handleCreatingEntry: ()=>void} ) => {
+const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {
     return (
         <div className="FormContainer">
             <div className="InputContainer">

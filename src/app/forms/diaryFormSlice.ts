@@ -32,9 +32,13 @@ const diaryFormSlice = createSlice({
     resetDiaryForm: (state) => {
       state.formData = { ...initialState.formData };
     },
+    hideDiaryForm: (state) => {
+      state.formData = { ...initialState.formData }
+      state.isVisible = false;
+    }
   },
 });
 
-export const { setDiaryFormData, toggleDiaryFormVisibility, resetDiaryForm } = diaryFormSlice.actions;
+export const { setDiaryFormData, toggleDiaryFormVisibility, resetDiaryForm, hideDiaryForm } = diaryFormSlice.actions;
 
 export default diaryFormSlice.reducer;

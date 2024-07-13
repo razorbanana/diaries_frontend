@@ -1,6 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { setToken } from "../app/user/userSlice";
+import { hideDiaryForm } from "../app/forms/diaryFormSlice";
+import { hideEntryForm } from "../app/forms/entryFormSlice";
+import { hideEditUserForm } from "../app/forms/editUserFormSlice";
 
 export const Topper = () => {
     const navigate = useNavigate()
@@ -19,6 +22,9 @@ export const Topper = () => {
             <TopperButton text="Log Out" onClickFunction={() => {
                 console.log("LogOut")
                 dispatch(setToken('undefined'))
+                dispatch(hideDiaryForm())
+                dispatch(hideEntryForm())
+                dispatch(hideEditUserForm())
                 localStorage.setItem('token', 'undefined')  
                 navigate("/my-diaries")  
             }}/>

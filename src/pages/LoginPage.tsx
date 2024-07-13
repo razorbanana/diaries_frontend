@@ -16,7 +16,7 @@ export const LoginPage = () => {
             console.log(`handleLogin token: ${token}`);
             dispatch(setToken(token));
             localStorage.setItem('token', token);
-            dispatch(resetLoginForm());
+            handleLoginFormReset()
         } catch (err: any) {
             console.error(err.message);
             handleLoginFormReset()
@@ -59,6 +59,8 @@ export const LoginPage = () => {
     const handleToggle = () => {
         dispatch(toggleLoginForm())
         dispatch(toggleRegisterForm())
+        handleRegisterFormReset()
+        handleLoginFormReset()
     }
 
     if (loginVisibility) {
