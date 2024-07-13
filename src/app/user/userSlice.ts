@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getMyUser, patchMyUser } from '../../services/users';
+import { deleteMyUser, getMyUser, patchMyUser } from '../../services/users';
 
 export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () => {
     const response = await getMyUser()
@@ -11,6 +11,13 @@ export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () =>
 export const updateMyUser: any = createAsyncThunk('user/updateMyUser', async (formData: UserInterface) => {
   const response = await patchMyUser(formData.name, formData.email, formData.visible)
   console.log(`response in fetchMyUser`)
+  console.log(response)
+  return response;
+});
+
+export const delMyUser: any = createAsyncThunk('user/delMyUser', async () => {
+  const response = await deleteMyUser()
+  console.log(`response in delMyUser`)
   console.log(response)
   return response;
 });
@@ -56,7 +63,7 @@ reducers: {
     setUser: (state, action: PayloadAction<UserInterface>) => {
         state.user = action.payload;
         console.log(state)
-    },
+    }
 },
 extraReducers: (builder) => {
     builder
@@ -84,18 +91,18 @@ extraReducers: (builder) => {
         state.loading = false;
         state.error = action.error.message;
       })
-    //   .addCase(delEntry.pending, (state) => {
-    //     state.loading = true;
-    //     state.error = null;
-    //   })
-    //   .addCase(delEntry.fulfilled, (state) => {
-    //     state.loading = false;
-    //     state.entry = { id: '', title: '', content: '' };
-    //   })
-    //   .addCase(delEntry.rejected, (state, action) => {
-    //     state.loading = true;
-    //     state.error = action.error.message;
-    //   })
+      .addCase(delMyUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(delMyUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = initialState.user;
+      })
+      .addCase(delMyUser.rejected, (state, action) => {
+        state.loading = true;
+        state.error = action.error.message;
+      })
   },});
 
 export const { setToken, setUser } = userSlice.actions;

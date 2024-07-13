@@ -30,6 +30,9 @@ const editUserFormSlice = createSlice({
     toggleEditUserFormVisibility: (state) => {
       state.isVisible = !state.isVisible;
     },
+    toggleUserVisibility: (state) => {
+      state.formData.visible = !state.formData.visible;
+    },
     resetEditUserForm: (state) => {
       state.formData = { ...initialState.formData };
     },
@@ -42,6 +45,6 @@ const editUserFormSlice = createSlice({
   }
 });
 
-export const { setEditUserFormData, toggleEditUserFormVisibility, resetEditUserForm } = editUserFormSlice.actions;
+export const { setEditUserFormData, toggleEditUserFormVisibility, resetEditUserForm, toggleUserVisibility } = editUserFormSlice.actions;
 
 export default editUserFormSlice.reducer;

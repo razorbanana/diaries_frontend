@@ -24,7 +24,7 @@ initialState,
 reducers: {
     setLoginFormData: (state, action: PayloadAction<{ name: string; value: string }>) => {
         const { name, value } = action.payload;
-        console.log("Setting login form data"+name+" "+value)
+        console.log("Setting login form data "+name+" "+value)
         state.entries = { ...state.entries, [name]: value};
         console.log(state)
     },
