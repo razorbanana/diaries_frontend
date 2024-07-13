@@ -65,7 +65,7 @@ const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, ha
             <p>Email: <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
             <p>Created at: {user.createdAt.toString()}</p>
             <p>Updated at: {user.createdAt.toString()}</p>
-            <p>Visible: <span onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
+            <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
             <div className="ButtonsContainer">
                 <button onClick={toggleVisibility}>Cancel</button>
                 <button onClick={updateUser}>Confirm</button>

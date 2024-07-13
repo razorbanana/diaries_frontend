@@ -57,7 +57,6 @@
 }
 
 .InputContainer{
-  
   margin: 0.6em
 }
 
@@ -65,4 +64,9 @@
   height: 2rem;
   width: 70%;
   font-size: 1rem;
+}
+
+.ToggleSpan{
+  cursor: pointer;
+  color: #007bff;
 }
