@@ -7,6 +7,7 @@ import loginFormReducer, {LoginFormState} from './forms/loginFormSlice'
 import userReducer, {UserState} from './user/userSlice'
 import registerReducer, { RegisterFormState } from './forms/registerFormSlice'
 import diaryFormReducer, {DiaryFormState} from './forms/diaryFormSlice'
+import editUserFormReducer, {EditUserFormState} from './forms/editUserFormSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     loginForm: loginFormReducer,
     registerForm: registerReducer,
     user: userReducer,
+    editUserForm: editUserFormReducer,
   },
   preloadedState: {
     diaries: {} as DiariesState,
@@ -28,6 +30,7 @@ export const store = configureStore({
     loginForm: {} as LoginFormState,
     registerForm: {} as RegisterFormState,
     user: {} as UserState,
+    editUserForm: {} as EditUserFormState,
   },
 })
 
