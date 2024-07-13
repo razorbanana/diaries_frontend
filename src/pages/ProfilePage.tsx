@@ -45,7 +45,11 @@ export const ProfilePage = () => {
     }
 
     const updateUser = () => {
-        dispatch(updateMyUser(formData))
+        dispatch(updateMyUser(formData)).then(() => {
+            toggleVisibility()
+            dispatch(fetchMyUser());
+        })
+        
     }
 
     return (

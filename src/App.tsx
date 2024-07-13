@@ -23,7 +23,6 @@ function App() {
     }
   }, [])
 
-  console.log(`token is ${token}`)
   if (token === 'undefined') {
     return <LoginPage/>
   }else{

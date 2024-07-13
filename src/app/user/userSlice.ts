@@ -10,7 +10,7 @@ export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () =>
 
 export const updateMyUser: any = createAsyncThunk('user/updateMyUser', async (formData: UserInterface) => {
   const response = await patchMyUser(formData.name, formData.email, formData.visible)
-  console.log(`response in fetchMyUser`)
+  console.log(`response in patchMyUser`)
   console.log(response)
   return response;
 });
@@ -58,11 +58,9 @@ initialState,
 reducers: {
     setToken: (state, action) => {
         state.token = action.payload;
-        console.log(state)
     },
     setUser: (state, action: PayloadAction<UserInterface>) => {
         state.user = action.payload;
-        console.log(state)
     }
 },
 extraReducers: (builder) => {
@@ -85,7 +83,8 @@ extraReducers: (builder) => {
       })
       .addCase(updateMyUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.token = action.payload;
+        localStorage.setItem('token', action.payload);
       })
       .addCase(updateMyUser.rejected, (state, action) => {
         state.loading = false;
