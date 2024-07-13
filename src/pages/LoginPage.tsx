@@ -1,19 +1,14 @@
-import { LoginFormState, resetLoginForm, setLoginFormData, toggleLoginForm } from "../app/forms/loginFormSlice";
+import { LoginFormEntries, LoginFormState, resetLoginForm, setLoginFormData, toggleLoginForm } from "../app/forms/loginFormSlice";
 import { login, register } from "../services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../app/user/userSlice";
-import { RegisterFormState, resetRegisterForm, setRegisterFormData, toggleRegisterForm } from "../app/forms/registerFormSlice";
+import { RegisterFormEntries, RegisterFormState, resetRegisterForm, setRegisterFormData, toggleRegisterForm } from "../app/forms/registerFormSlice";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
-    const loginEntries = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.entries || {username: '', password: ''});
-    const regEntries = useSelector((state: {registerForm: RegisterFormState}) => state.registerForm.entries || {username: '', email: '', password: ''});
+    const loginEntries = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.entries);
+    const regEntries = useSelector((state: {registerForm: RegisterFormState}) => state.registerForm.entries);
     const loginVisibility = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.isVisible);
-    const loginPassword = loginEntries.password || '';
-    const loginUsername = loginEntries.username || '';
-    const registerPassword = regEntries.password || '';
-    const registerUsername = regEntries.username || '';
-    const registerEmail = regEntries.email || '';
 
     const handleLogin = async () => {
         try {
@@ -30,7 +25,7 @@ export const LoginPage = () => {
     
     const handleRegister = async () => {
         try {
-            await register(registerUsername, registerEmail, registerPassword);
+            await register(regEntries.username, regEntries.email, regEntries.password);
             handleRegisterFormReset()
             handleToggle()
         } catch (err: any) {
@@ -69,25 +64,25 @@ export const LoginPage = () => {
     if (loginVisibility) {
         return (
             <div className="Page">
-                <LoginForm  handleInputChange={handleLoginInputChange} handleFormReset={handleLoginFormReset} username={loginUsername} password={loginPassword} handleLogin={handleLogin} handleToggle={handleToggle}/>
+                <LoginForm  handleInputChange={handleLoginInputChange} handleFormReset={handleLoginFormReset} loginEntries={loginEntries} handleLogin={handleLogin} handleToggle={handleToggle}/>
             </div>
         ); 
     }
     return (
         <div className="Page">
-            <RegisterForm  handleInputChange={handleRegisterInputChange} handleFormReset={handleRegisterFormReset} username={registerUsername} email={registerEmail} password={registerPassword} handleRegister={handleRegister} handleToggle={handleToggle}/>
+            <RegisterForm  handleInputChange={handleRegisterInputChange} handleFormReset={handleRegisterFormReset} regEntries={regEntries} handleRegister={handleRegister} handleToggle={handleToggle}/>
         </div>
     ); 
 }
 
-const LoginForm = ({handleInputChange, handleFormReset, username, password, handleLogin, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, username: string, password: string, handleLogin: ()=>void, handleToggle: ()=>void} ) => {
+const LoginForm = ({handleInputChange, handleFormReset, loginEntries, handleLogin, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, loginEntries: LoginFormEntries, handleLogin: ()=>void, handleToggle: ()=>void} ) => {
     return (
         <div className="FormContainer">
             <div className="InputContainer">
-                <input type="text" name="username" placeholder="Username or email" onChange={handleInputChange} value={username}/>
+                <input type="text" name="username" placeholder="Username or email" onChange={handleInputChange} value={loginEntries.username}/>
             </div>
             <div className="InputContainer">
-                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
+                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={loginEntries.password}/>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={handleFormReset}>Reset Form</button>
@@ -101,17 +96,17 @@ const LoginForm = ({handleInputChange, handleFormReset, username, password, hand
     )
 }
 
-const RegisterForm = ({handleInputChange, handleFormReset, username, email, password, handleRegister, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, username: string, email: string, password: string, handleRegister: ()=>void, handleToggle: ()=>void} ) => {
+const RegisterForm = ({handleInputChange, handleFormReset, regEntries, handleRegister, handleToggle}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, regEntries: RegisterFormEntries, handleRegister: ()=>void, handleToggle: ()=>void} ) => {
     return (
         <div className="FormContainer">
             <div className="InputContainer">
-                <input type="text" name="username" placeholder="Username" onChange={handleInputChange} value={username}/>
+                <input type="text" name="username" placeholder="Username" onChange={handleInputChange} value={regEntries.username}/>
             </div>
             <div className="InputContainer">
-                <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={email}/>
+                <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={regEntries.email}/>
             </div>
             <div className="InputContainer">
-                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={password}/>
+                <input type="text" name="password" placeholder="Password" onChange={handleInputChange} value={regEntries.password}/>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={handleFormReset}>Reset Form</button>

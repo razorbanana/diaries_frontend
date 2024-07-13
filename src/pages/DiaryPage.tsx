@@ -12,11 +12,11 @@ export const DiaryPage = () => {
     console.log(`id is ${id}`)
     if (id === undefined) return <p>Diary not found</p>;
     const dispatch = useDispatch();
-    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {return state.diaryEntries.entries || [];});
+    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {return state.diaryEntries.entries});
     const loading = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.loading);
     const error = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.error);
     const isVisible = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.isVisible);
-    const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData || {title:'', content:''});
+    const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData);
 
     useEffect(() => {
         console.log("fetching diary entries")

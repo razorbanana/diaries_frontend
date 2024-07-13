@@ -15,9 +15,6 @@ export const EntryPage = () => {
     });
     const loading = useSelector((state: {entry: EntryState}) => state.entry.loading);
     const error = useSelector((state: {entry: EntryState}) => state.entry.error);
-    console.log(`entry is ${entry}`)
-    console.log(`loading is ${loading}`)
-    console.log(`error is ${error}`)
 
     useEffect(() => {
         console.log("fetching entry")

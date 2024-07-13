@@ -1,9 +1,15 @@
 import {createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchMyUser, UserInterface } from '../user/userSlice';
+import { fetchMyUser } from '../user/userSlice';
 
+export interface EditUserFormInterface {
+  id: string;
+  email: string;
+  name: string;
+  visible: boolean;
+}
 
 export interface EditUserFormState {
-  formData: UserInterface;
+  formData: EditUserFormInterface;
   isVisible: boolean;
 }
 
@@ -12,9 +18,7 @@ const initialState: EditUserFormState = {
     id: '',
     email: '',
     name: '',
-    visible: false,
-    createdAt : new Date(),
-    updatedAt : new Date(),
+    visible: false
   },
   isVisible: false,
 };
@@ -40,7 +44,13 @@ const editUserFormSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchMyUser.fulfilled, (state, action) => {
-        state.formData = action.payload;
+        const newFormData = {
+          id: action.payload.id,
+          email: action.payload.email,
+          name: action.payload.name,
+          visible: action.payload.visible
+        }
+        state.formData = newFormData;
       })
   }
 });

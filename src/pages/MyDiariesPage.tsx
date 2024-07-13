@@ -14,8 +14,7 @@ export const MyDiariesPage = () => {
     const loading = useSelector((state: {diaries: DiariesState}) => state.diaries.loading);
     const error = useSelector((state: {diaries: DiariesState}) => state.diaries.error);
     const isVisible = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.isVisible);
-    const formData = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.formData || {title:'', description:''});
-    console.log(isVisible)
+    const formData = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.formData);
 
     useEffect(() => {
         console.log("fetching diaries")

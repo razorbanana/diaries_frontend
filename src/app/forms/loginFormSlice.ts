@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface LoginFormEntries {
+export interface LoginFormEntries {
     username: string;
     password: string;
 }

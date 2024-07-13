@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyUser, UserState, UserInterface, updateMyUser, delMyUser, setToken } from "../app/user/userSlice";
-import { EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../app/forms/editUserFormSlice";
+import { EditUserFormInterface, EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../app/forms/editUserFormSlice";
 import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {
@@ -11,7 +11,7 @@ export const ProfilePage = () => {
     const loading = useSelector((state: {user: UserState}) => state.user.loading);
     const error = useSelector((state: {user: UserState}) => state.user.error);
     const isVisible = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.isVisible);
-    const formData = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.formData || {id:'', email:'', name:'', visible:false, createdAt: new Date(), updatedAt: new Date()});
+    const formData = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.formData);
 
     useEffect(() => {
         console.log("fetching profile")
@@ -62,13 +62,11 @@ export const ProfilePage = () => {
     );
 }
 
-const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, handleUserVisibility}: {user: UserInterface, toggleVisibility: ()=>void, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void, updateUser: ()=>void, handleUserVisibility: ()=>void}) => {
+const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, handleUserVisibility}: {user: EditUserFormInterface, toggleVisibility: ()=>void, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void, updateUser: ()=>void, handleUserVisibility: ()=>void}) => {
     return (
         <div>
             <p>Name: <input type="text" name="name" placeholder="Name" onChange={handleInputChange} value={user.name}/></p>
             <p>Email: <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
-            <p>Created at: {user.createdAt.toString()}</p>
-            <p>Updated at: {user.createdAt.toString()}</p>
             <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
             <div className="ButtonsContainer">
                 <button onClick={toggleVisibility}>Cancel</button>

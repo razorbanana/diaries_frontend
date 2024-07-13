@@ -27,8 +27,8 @@ export interface UserInterface {
     email: string;
     name: string;
     visible: boolean;
-    createdAt : Date;
-    updatedAt : Date;
+    createdAt : string;
+    updatedAt : string;
 }
 
 export interface UserState {
@@ -44,8 +44,8 @@ const initialState: UserState = {
         email: '',
         name: '',
         visible: false,
-        createdAt : new Date(),
-        updatedAt : new Date(),
+        createdAt : new Date().toISOString(),
+        updatedAt : new Date().toISOString(),
     },
     token: '',
     loading: false,

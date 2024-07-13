@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import diariesReducer, { DiariesState } from './diaries/diariesSlice'
-import diaryEntriesReducer, { DiaryEntriesState } from './diaryEntries/diaryEntriesSlice'
-import entryReducer, {EntryState} from './entry/entrySlice'
-import entryFormReducer, {EntryFormState} from './forms/entryFormSlice'
-import loginFormReducer, {LoginFormState} from './forms/loginFormSlice'
-import userReducer, {UserState} from './user/userSlice'
-import registerReducer, { RegisterFormState } from './forms/registerFormSlice'
-import diaryFormReducer, {DiaryFormState} from './forms/diaryFormSlice'
-import editUserFormReducer, {EditUserFormState} from './forms/editUserFormSlice'
+import diariesReducer from './diaries/diariesSlice'
+import diaryEntriesReducer from './diaryEntries/diaryEntriesSlice'
+import entryReducer from './entry/entrySlice'
+import entryFormReducer from './forms/entryFormSlice'
+import loginFormReducer from './forms/loginFormSlice'
+import userReducer from './user/userSlice'
+import registerReducer from './forms/registerFormSlice'
+import diaryFormReducer from './forms/diaryFormSlice'
+import editUserFormReducer from './forms/editUserFormSlice'
 
 export const store = configureStore({
   reducer: {
@@ -20,17 +20,6 @@ export const store = configureStore({
     registerForm: registerReducer,
     user: userReducer,
     editUserForm: editUserFormReducer,
-  },
-  preloadedState: {
-    diaries: {} as DiariesState,
-    diaryEntries: {} as DiaryEntriesState,
-    entry: {} as EntryState,
-    entryForm: {} as EntryFormState,
-    diaryForm: {} as DiaryFormState,
-    loginForm: {} as LoginFormState,
-    registerForm: {} as RegisterFormState,
-    user: {} as UserState,
-    editUserForm: {} as EditUserFormState,
   },
 })
 
