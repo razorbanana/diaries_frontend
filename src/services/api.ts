@@ -20,4 +20,18 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+export function withErrorHandling(fn: Function) {
+  return async function(...args: any[]) {
+    try {
+      return await fn(...args);
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+          log.error("Unauthorized request")
+          error.message = "Token is expired, please login again";
+      }
+      throw error;
+  }
+  };
+}
+
 export default api;
