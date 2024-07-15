@@ -1,24 +1,25 @@
 import {createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deleteMyUser, getMyUser, patchMyUser } from '../../services/users';
+import log from '../../common/utils/logger';
 
 export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () => {
     const response = await getMyUser()
-    console.log(`response in fetchMyUser`)
-    console.log(response)
+    log.info(`response in fetchMyUser`)
+    log.info(response)
     return response;
 });
 
 export const updateMyUser: any = createAsyncThunk('user/updateMyUser', async (formData: UserInterface) => {
   const response = await patchMyUser(formData.name, formData.email, formData.visible)
-  console.log(`response in patchMyUser`)
-  console.log(response)
+  log.info(`response in patchMyUser`)
+  log.info(response)
   return response;
 });
 
 export const delMyUser: any = createAsyncThunk('user/delMyUser', async () => {
   const response = await deleteMyUser()
-  console.log(`response in delMyUser`)
-  console.log(response)
+  log.info(`response in delMyUser`)
+  log.info(response)
   return response;
 });
 

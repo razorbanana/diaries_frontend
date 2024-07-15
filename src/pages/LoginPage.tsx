@@ -3,6 +3,7 @@ import { login, register } from "../services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../app/user/userSlice";
 import { RegisterFormEntries, RegisterFormState, resetRegisterForm, setRegisterFormData, toggleRegisterForm } from "../app/forms/registerFormSlice";
+import log from "../common/utils/logger";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
@@ -13,12 +14,12 @@ export const LoginPage = () => {
     const handleLogin = async () => {
         try {
             const token = await login(loginEntries.username, loginEntries.password);
-            console.log(`handleLogin token: ${token}`);
+            log.info(`handleLogin token: ${token ? true : false}`);
             dispatch(setToken(token));
             localStorage.setItem('token', token);
             handleLoginFormReset()
         } catch (err: any) {
-            console.error(err.message);
+            log.warn(err.message);
             handleLoginFormReset()
         }
     };
@@ -29,7 +30,7 @@ export const LoginPage = () => {
             handleRegisterFormReset()
             handleToggle()
         } catch (err: any) {
-            console.error(err.message);
+            log.warn(err.message);
             handleRegisterFormReset()
         }
     }
@@ -37,14 +38,12 @@ export const LoginPage = () => {
     const handleRegisterInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log(`name: ${name}, value: ${value}`)
         dispatch(setRegisterFormData({ name, value }));
     };
 
     const handleLoginInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log(`name: ${name}, value: ${value}`)
         dispatch(setLoginFormData({ name, value }));
     };
 

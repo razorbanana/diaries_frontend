@@ -1,19 +1,20 @@
+import log from '../common/utils/logger';
 import api from './api';
 
 export const getMyDiaries = async () => {
-  console.log("GET /diaries/my")
+  log.info("GET /diaries/my")
   const response = await api.get('/diaries/my');
   return response.data;
 }
 
 export const getDiaryEntries = async (id: string) => {
-  console.log("GET /entries/{id}")
+  log.info("GET /entries/{id}")
   const response = await api.get(`/entries/${id}`);
   return response.data;
 }
 
 export const createDiary = async (data: {title: string, description: string}) => {
-  console.log("POST /diaries/my")
+  log.info("POST /diaries/my")
   const response = await api.post(`/diaries/my`, data);
   return response.data;
 }

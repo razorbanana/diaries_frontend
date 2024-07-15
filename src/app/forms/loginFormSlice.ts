@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 export interface LoginFormEntries {
     username: string;
     password: string;
@@ -26,7 +25,6 @@ reducers: {
         const { name, value } = action.payload;
         console.log("Setting login form data "+name+" "+value)
         state.entries = { ...state.entries, [name]: value};
-        console.log(state)
     },
     resetLoginForm: (state) => {
         state.entries = { ...initialState.entries };

@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EntryType } from "../../types/entryType";
+import { EntryType } from "../../common/types/entryType";
 import { getDiaryEntries } from "../../services/diaries";
+import log from '../../common/utils/logger';
 
 export const fetchDiaryEntries: any = createAsyncThunk('diaryEntries/fetchDiaryEntries', async (id:string) => {
     const response = await getDiaryEntries(id)
-    console.log(`response in fetchDiaryEntries`)
-    console.log(response)
+    log.info(`response in fetchDiaryEntries`)
+    log.info(response)
     return response;
   });
 
@@ -37,8 +38,6 @@ const diaryEntriesSlice = createSlice({
       })
       .addCase(fetchDiaryEntries.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(`action in diaryEntriesSlice`)
-        console.log(action)
         state.entries = action.payload;
       })
       .addCase(fetchDiaryEntries.rejected, (state, action) => {

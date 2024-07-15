@@ -28,7 +28,6 @@ reducers: {
         const { name, value } = action.payload;
         console.log("Setting register form data"+name+" "+value)
         state.entries = { ...state.entries, [name]: value};
-        console.log(state)
     },
     resetRegisterForm: (state) => {
         state.entries = { ...initialState.entries };

@@ -1,5 +1,5 @@
 import { useEffect} from "react";
-import { DiaryType } from "../types/diaryType";
+import { DiaryType } from "../common/types/diaryType";
 import { useDispatch, useSelector } from "react-redux";
 import { DiariesState, fetchDiaries, addDiary, delDiary } from "../app/diaries/diariesSlice";
 import { useNavigate } from "react-router-dom";

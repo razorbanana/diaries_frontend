@@ -14,7 +14,6 @@ export const ProfilePage = () => {
     const formData = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.formData);
 
     useEffect(() => {
-        console.log("fetching profile")
         dispatch(fetchMyUser());
     }, [dispatch]);
 

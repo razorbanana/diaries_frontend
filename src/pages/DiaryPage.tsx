@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { DiaryEntriesState, fetchDiaryEntries, addEntry } from "../app/diaryEntries/diaryEntriesSlice";
-import { EntryType } from "../types/entryType";
+import { EntryType } from "../common/types/entryType";
 import { resetEntryForm, setEntryFormData, toggleEntryFormVisibility, EntryFormData, EntryFormState } from "../app/forms/entryFormSlice";
 import { createEntry } from "../services/entries";
 import { ToggleFormButton } from "../components/ToggleButton";
 
 export const DiaryPage = () => {
     const { id } = useParams<{id: string}>();
-    console.log(`id is ${id}`)
     if (id === undefined) return <p>Diary not found</p>;
     const dispatch = useDispatch();
     const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {return state.diaryEntries.entries});
@@ -19,7 +18,6 @@ export const DiaryPage = () => {
     const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData);
 
     useEffect(() => {
-        console.log("fetching diary entries")
         dispatch(fetchDiaryEntries(id));
     }, [dispatch]);
     

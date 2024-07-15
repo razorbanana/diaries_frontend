@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { EntryType } from "../../types/entryType";
+import { EntryType } from "../../common/types/entryType";
 import { deleteEntry, getEntry } from "../../services/entries";
+import log from '../../common/utils/logger';
 
 export const fetchEntry: any = createAsyncThunk('entry/fetchEntry', async (id:string) => {
     const response = await getEntry(id)
-    console.log(`response in fetchEntry`)
-    console.log(response)
+    log.info(`response in fetchEntry`)
+    log.info(response)
     return response;
   });
 
 export const delEntry: any = createAsyncThunk('entry/deleteEntry', async (id:string) => {
     const response = await deleteEntry(id)
-    console.log(`response in deleteEntry`)
-    console.log(response)
+    log.info(`response in deleteEntry`)
+    log.info(response)
     return response;
 })
 

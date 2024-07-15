@@ -1,14 +1,15 @@
+import log from '../common/utils/logger';
 import api from './api';
 
 export const login = async (username: string, password: string) => {
-  console.log('login service');
+  log.info("POST /auth/login");
   const response = await api.post('/auth/login', { username, password });
-  console.log('response', response);
   const token = response.data;
   return token;
 };
 
 export const register = async (name: string, email: string, password: string) => {
+  log.info("POST /users/register");
   const response = await api.post('/users/register', { email, password, name });
   return response.data;
 };
