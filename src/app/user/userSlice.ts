@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deleteMyUser, getMyUser, patchMyUser } from '../../services/users';
 import log from '../../common/utils/logger';
+import { UserType } from '../../common/types/userType';
 
 export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () => {
     const response = await getMyUser()
@@ -9,7 +10,7 @@ export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () =>
     return response;
 });
 
-export const updateMyUser: any = createAsyncThunk('user/updateMyUser', async (formData: UserInterface) => {
+export const updateMyUser: any = createAsyncThunk('user/updateMyUser', async (formData: UserType) => {
   const response = await patchMyUser(formData.name, formData.email, formData.visible)
   log.info(`response in patchMyUser`)
   log.info(response)
@@ -23,17 +24,8 @@ export const delMyUser: any = createAsyncThunk('user/delMyUser', async () => {
   return response;
 });
 
-export interface UserInterface {
-    id: string;
-    email: string;
-    name: string;
-    visible: boolean;
-    createdAt : string;
-    updatedAt : string;
-}
-
 export interface UserState {
-    user: UserInterface;
+    user: UserType;
     token: string;
     loading: boolean;
     error: string | null;
@@ -60,7 +52,7 @@ reducers: {
     setToken: (state, action) => {
         state.token = action.payload;
     },
-    setUser: (state, action: PayloadAction<UserInterface>) => {
+    setUser: (state, action: PayloadAction<UserType>) => {
         state.user = action.payload;
     }
 },

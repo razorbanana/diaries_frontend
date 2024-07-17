@@ -4,12 +4,14 @@ import { setToken } from "../app/user/userSlice";
 import { hideDiaryForm } from "../app/forms/diaryFormSlice";
 import { hideEntryForm } from "../app/forms/entryFormSlice";
 import { hideEditUserForm } from "../app/forms/editUserFormSlice";
+import { ReturnButton } from "../components/ReturnButton";
 
 export const Topper = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     return (
         <div className="Topper">
+            <ReturnButton/>
             <TopperButton text="My Diaries" onClickFunction={() => {
                 navigate("/my-diaries")
             }}/>

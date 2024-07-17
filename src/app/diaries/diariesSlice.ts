@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DiaryType } from "../../common/types/diaryType";
-import { deleteDiary, getMyDiaries } from "../../services/diaries";
+import { deleteDiary, getMyDiaries, patchDiary } from "../../services/diaries";
 import log from '../../common/utils/logger';
+import { EditDiaryFormInterface } from "../forms/editDiaryFormSlice";
 
 export const fetchDiaries: any = createAsyncThunk('diaries/fetchDiaries', async () => {
     const response = await getMyDiaries()
@@ -9,6 +10,13 @@ export const fetchDiaries: any = createAsyncThunk('diaries/fetchDiaries', async 
     log.info(response)
     return response;
   });
+
+export const updateMyDiary: any = createAsyncThunk('diaries/updateDiary', async (formData: EditDiaryFormInterface) => {
+  const response = await patchDiary(formData.id, formData.title, formData.description, formData.isPrivate)
+  log.info(`response in patchDiary`)
+  log.info(response)
+  return response;
+});
 
 export const delDiary: any = createAsyncThunk('entry/deleteDiary', async (id:string) => {
     const response = await deleteDiary(id)
@@ -48,6 +56,19 @@ const diariesSlice = createSlice({
         state.diaries = action.payload;
       })
       .addCase(fetchDiaries.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateMyDiary.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateMyDiary.fulfilled, (state, action) => {
+        state.loading = false;
+        const newDiaries = state.diaries.map(diary => diary.id === action.payload.id ? action.payload : diary)
+        state.diaries = newDiaries
+      })
+      .addCase(updateMyDiary.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

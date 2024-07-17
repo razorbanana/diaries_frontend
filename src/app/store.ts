@@ -8,6 +8,7 @@ import userReducer from './user/userSlice'
 import registerReducer from './forms/registerFormSlice'
 import diaryFormReducer from './forms/diaryFormSlice'
 import editUserFormReducer from './forms/editUserFormSlice'
+import editDiaryFormReducer from './forms/editDiaryFormSlice'
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     registerForm: registerReducer,
     user: userReducer,
     editUserForm: editUserFormReducer,
+    editDiaryForm: editDiaryFormReducer,
   },
 })
 

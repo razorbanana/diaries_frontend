@@ -1,11 +1,13 @@
 import { useEffect} from "react";
 import { DiaryType } from "../common/types/diaryType";
 import { useDispatch, useSelector } from "react-redux";
-import { DiariesState, fetchDiaries, addDiary, delDiary } from "../app/diaries/diariesSlice";
+import { DiariesState, fetchDiaries, addDiary, delDiary, updateMyDiary } from "../app/diaries/diariesSlice";
 import { useNavigate } from "react-router-dom";
 import { ToggleFormButton } from "../components/ToggleButton";
 import { toggleDiaryFormVisibility, setDiaryFormData, resetDiaryForm, DiaryFormState, DiaryFormData } from "../app/forms/diaryFormSlice";
 import { createDiary } from "../services/diaries";
+import moment from "moment";
+import { EditDiaryFormInterface, EditDiaryFormState, getEditDiaryFormData, resetEditDiaryForm, setEditDiaryFormData, toggleDiaryPrivacy } from "../app/forms/editDiaryFormSlice";
 
 
 export const MyDiariesPage = () => {
@@ -15,6 +17,7 @@ export const MyDiariesPage = () => {
     const error = useSelector((state: {diaries: DiariesState}) => state.diaries.error);
     const isVisible = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.isVisible);
     const formData = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.formData);
+    const editDiaryFormData = useSelector((state: {editDiaryForm: EditDiaryFormState}) => state.editDiaryForm.formData);
 
     useEffect(() => {
         console.log("fetching diaries")
@@ -28,11 +31,13 @@ export const MyDiariesPage = () => {
         dispatch(toggleDiaryFormVisibility())
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setDiaryFormData({ name, value }));
     }
+
+    
 
     const handleFormReset = () => {
         dispatch(resetDiaryForm());
@@ -42,33 +47,27 @@ export const MyDiariesPage = () => {
         const response = await createDiary(formData)
         console.log(`CREATION RESPONSE`)
         console.log(response)
-        const newDiary = {
-            id: response.id,
-            title: response.title,
-            description: response.description,
-            isPrivate: response.isPrivate
-        }
-        dispatch(addDiary({diary: newDiary}))
+        dispatch(addDiary({diary: response}))
         handleFormReset()
     }
 
     return (
         <div className="Page">
-            {isVisible ? <DiaryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
             <ToggleFormButton onClick={handleFormToggle}/>
-            <DiaryList diaries={diaries}/>
+            {isVisible ? <DiaryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
+            <DiaryList diaries={diaries} editDiaryFormData={editDiaryFormData}/>
         </div>
     );
 }
 
-const DiaryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: DiaryFormData, handleCreatingEntry: ()=>void} ) => {
+const DiaryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, handleFormReset: ()=>void, formData: DiaryFormData, handleCreatingEntry: ()=>void} ) => {
     return (
         <div className="FormContainer">
             <div className="InputContainer">
                 <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
             </div>
             <div className="InputContainer">
-                <input type="text" name="description" placeholder="Description" onChange={handleInputChange} value={formData.description}/>
+                <textarea className='LongTextInput' name="description" placeholder="Description" onChange={handleInputChange} value={formData.description}/>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={handleFormReset}>Reset Form</button>
@@ -79,10 +78,10 @@ const DiaryForm = ({handleInputChange, handleFormReset, formData, handleCreating
     )
 }
 
-const DiaryList = ({diaries}: {diaries: DiaryType[]}) => {
+const DiaryList = ({diaries, editDiaryFormData}: {diaries: DiaryType[], editDiaryFormData: EditDiaryFormInterface}) => {
     return (
         <div className="EntityList">
-            {diaries.map((diary) => <Diary key={diary.id} diary={diary}/>)}
+            {diaries.map((diary) => editDiaryFormData.id === diary.id ? <EditDiaryForm editDiaryFormData={editDiaryFormData} key={diary.id}/>:<Diary key={diary.id} diary={diary}/>)}
         </div>
     );
 }
@@ -93,12 +92,46 @@ const Diary = ({ diary }: {diary: DiaryType}) => {
     return(
         <div className="EntityContainer">
             <div>
-            {diary.title} {diary.isPrivate ? "Private" : "Public"}
+            <p className="TitleP">{diary.title}</p>
+            <p>{diary.isPrivate ? "Private" : "Public"}</p>
+            <p className="TimeP">Updated at {moment(diary.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
             <p>{diary.description}</p>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={() => {navigate(`/diary/${diary.id}`)}}>Read Diary</button>
+                <button onClick={() => {dispatch(getEditDiaryFormData(diary))}}>Update Diary</button>
                 <button onClick={() => {dispatch(delDiary(diary.id))}}>Delete Diary</button>
+            </div>
+        </div>
+    )
+}
+
+const EditDiaryForm = ({editDiaryFormData}:{editDiaryFormData: EditDiaryFormInterface}) => {
+    const dispatch = useDispatch();
+    const handleEditDiaryFormInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        dispatch(setEditDiaryFormData({ name, value }));
+    }
+
+    const handleConfirmEdit = () => {
+        dispatch(updateMyDiary(editDiaryFormData)).then(() => {
+            dispatch(resetEditDiaryForm());
+        })
+    }
+
+    return  (
+        <div className="EntityContainer">
+            <div>
+            <p>New title:</p>
+            <p><input className="ShortTextInput" type="text" name="title" placeholder="Title" onChange={handleEditDiaryFormInputChange} value={editDiaryFormData.title}/></p>
+            <p>New description:</p>
+            <p><textarea className="LongTextInput" name="description" placeholder="Description" onChange={handleEditDiaryFormInputChange} value={editDiaryFormData.description}/></p>
+            <span className="ToggleSpan" onClick={()=>{dispatch(toggleDiaryPrivacy())}}>{editDiaryFormData.isPrivate ? 'Private':'Public'}</span>
+            </div>
+            <div className="ButtonsContainer">
+                <button onClick={() => {dispatch(resetEditDiaryForm())}}>Cancel</button>
+                <button onClick={handleConfirmEdit}>Accept</button>
             </div>
         </div>
     )

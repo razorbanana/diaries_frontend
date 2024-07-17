@@ -10,9 +10,9 @@ export const getMyUser = withErrorHandling(async () => {
 
 export const patchMyUser = withErrorHandling(async (name: string, email: string, visible: boolean) => {
     log.info("PATCH /users/my")
-        const body = {name, email, visible}
-        const response = await api.patch('/users/my', body);
-        return response.data;
+    const body = {name, email, visible}
+    const response = await api.patch('/users/my', body);
+    return response.data;
 })
 
 export const deleteMyUser = withErrorHandling(async () => {

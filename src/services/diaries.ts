@@ -20,6 +20,13 @@ export const createDiary = withErrorHandling(async (data: {title: string, descri
   return response.data;
 })
 
+export const patchDiary = withErrorHandling(async (id: string, title: string, description: string, isPrivate: boolean) => {
+  log.info("PATCH /diaries/my/{id}")
+  const body = {title, description, isPrivate}
+  const response = await api.patch(`/diaries/my/${id}`, body);
+  return response.data;
+})
+
 export const deleteDiary = withErrorHandling(async (id: string) => {
   console.log(`DELETE /diaries/my/${id}`)
   const response = await api.delete(`/diaries/my/${id}`);

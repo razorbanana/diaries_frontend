@@ -6,12 +6,14 @@ import { EntryType } from "../common/types/entryType";
 import { resetEntryForm, setEntryFormData, toggleEntryFormVisibility, EntryFormData, EntryFormState } from "../app/forms/entryFormSlice";
 import { createEntry } from "../services/entries";
 import { ToggleFormButton } from "../components/ToggleButton";
+import { delEntry } from "../app/entry/entrySlice";
+import moment from "moment";
 
 export const DiaryPage = () => {
     const { id } = useParams<{id: string}>();
     if (id === undefined) return <p>Diary not found</p>;
     const dispatch = useDispatch();
-    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  {return state.diaryEntries.entries});
+    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  state.diaryEntries.entries);
     const loading = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.loading);
     const error = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.error);
     const isVisible = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.isVisible);
@@ -21,7 +23,7 @@ export const DiaryPage = () => {
         dispatch(fetchDiaryEntries(id));
     }, [dispatch]);
     
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEntryFormData({ name, value }));
@@ -35,14 +37,13 @@ export const DiaryPage = () => {
         dispatch(resetEntryForm());
       };
 
+      const handleDeleteEntry = () => {
+        dispatch(delEntry(id))
+    }
+
       const handleCreatingEntry = async () => {
         const response = await createEntry(id, formData)
-        const newEntry = {
-            id: response.id,
-            title: response.title,
-            content: response.content
-        }
-        dispatch(addEntry({entry: newEntry}))
+        dispatch(addEntry({entry: response}))
         handleFormReset()
     }
 
@@ -50,44 +51,46 @@ export const DiaryPage = () => {
     if (error) return <p>Error: {error}</p>;
     return (
         <div className="Page">
-            {isVisible ? <EntryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
             <ToggleFormButton onClick={handleFormToggle}/>
-            <EntryList entries={entries}/>
+            {isVisible ? <EntryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
+            <EntryList entries={entries} handleDeleteEntry={handleDeleteEntry}/>
         </div>
     );
 }
 
-const EntryList = ({ entries }: {entries: EntryType[]}) => {
+const EntryList = ({ entries, handleDeleteEntry }: {entries: EntryType[], handleDeleteEntry: ()=>void}) => {
     return(
         <div className="EntityList">
-            {entries.map((entry) => <Entry key={entry.id} entry={entry}/>)}
+            {entries.map((entry) => <Entry key={entry.id} entry={entry} handleDeleteEntry={handleDeleteEntry}/>)}
         </div>
     )
 }
 
-const Entry = ({ entry }: {entry: EntryType}) => {
+const Entry = ({ entry, handleDeleteEntry }: {entry: EntryType, handleDeleteEntry:()=>void}) => {
     const navigate = useNavigate()
     return(
         <div className="EntityContainer">
             <div>
-            {entry.title} 
+            <p className="TitleP">{entry.title}</p> 
+            <p className="TimeP">Updated at {moment(entry.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
             <p>{entry.content}</p>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
+                <button onClick={() => {handleDeleteEntry}}>Delete Entry</button>
             </div>
         </div>
     )
 }
 
-const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {
+const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {
     return (
         <div className="FormContainer">
             <div className="InputContainer">
                 <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
             </div>
             <div className="InputContainer">
-                <input type="textarea" name="content" placeholder="Content" onChange={handleInputChange} value={formData.content}/>
+                <textarea className="LongTextInput" name="content" placeholder="Content" onChange={handleInputChange} value={formData.content}/>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={handleFormReset}>Reset Form</button>

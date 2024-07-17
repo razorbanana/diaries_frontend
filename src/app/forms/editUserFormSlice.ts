@@ -2,7 +2,6 @@ import {createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchMyUser } from '../user/userSlice';
 
 export interface EditUserFormInterface {
-  id: string;
   email: string;
   name: string;
   visible: boolean;
@@ -15,7 +14,6 @@ export interface EditUserFormState {
 
 const initialState: EditUserFormState = {
   formData: {
-    id: '',
     email: '',
     name: '',
     visible: false
@@ -49,7 +47,6 @@ const editUserFormSlice = createSlice({
     builder
       .addCase(fetchMyUser.fulfilled, (state, action) => {
         const newFormData = {
-          id: action.payload.id,
           email: action.payload.email,
           name: action.payload.name,
           visible: action.payload.visible

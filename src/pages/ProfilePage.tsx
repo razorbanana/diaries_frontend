@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyUser, UserState, UserInterface, updateMyUser, delMyUser, setToken } from "../app/user/userSlice";
+import { fetchMyUser, UserState, updateMyUser, delMyUser, setToken } from "../app/user/userSlice";
 import { EditUserFormInterface, EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../app/forms/editUserFormSlice";
 import { useNavigate } from "react-router-dom";
+import { UserType } from "../common/types/userType";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -64,8 +65,8 @@ export const ProfilePage = () => {
 const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, handleUserVisibility}: {user: EditUserFormInterface, toggleVisibility: ()=>void, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void, updateUser: ()=>void, handleUserVisibility: ()=>void}) => {
     return (
         <div>
-            <p>Name: <input type="text" name="name" placeholder="Name" onChange={handleInputChange} value={user.name}/></p>
-            <p>Email: <input type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
+            <p>Name: <input className="ShortTextInput" type="text" name="name" placeholder="Name" onChange={handleInputChange} value={user.name}/></p>
+            <p>Email: <input className="ShortTextInput" type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
             <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
             <div className="ButtonsContainer">
                 <button onClick={toggleVisibility}>Cancel</button>
@@ -75,7 +76,7 @@ const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, ha
     );
 }
 
-const UserProperties = ({user, toggleVisibility, handleDeleteUser}: {user: UserInterface, toggleVisibility: ()=>void, handleDeleteUser:()=>void}) => {
+const UserProperties = ({user, toggleVisibility, handleDeleteUser}: {user: UserType, toggleVisibility: ()=>void, handleDeleteUser:()=>void}) => {
     return (
         <div>
             <p>Name: {user.name}</p>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { delEntry, EntryState, fetchEntry } from "../app/entry/entrySlice";
+import moment from "moment";
 
 export const EntryPage = () => {
     const navigate = useNavigate();
@@ -26,7 +27,8 @@ export const EntryPage = () => {
         <div className="Page">
             <div className="EntityContainer">
                 <div>
-                    {entry.title} 
+                    <p className="TitleP">{entry.title}</p>
+                    <p className="TimeP">Updated at {moment(entry.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
                     <p>{entry.content}</p>
                 </div>
                 <div className="ButtonsContainer">
