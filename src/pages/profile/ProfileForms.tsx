@@ -16,7 +16,7 @@ export const EditUserForm = ({user, toggleVisibility, handleInputChange, updateU
     );
 }
 
-export const NewPassportForm = () => {
+export const NewPasswordForm = () => {
 
     const dispatch = useDispatch();
     const { oldPassword, newPassword, confirmPassword } = useSelector((state: {editPasswordForm: EditPasswordFormState}) => state.editPasswordForm.formData);

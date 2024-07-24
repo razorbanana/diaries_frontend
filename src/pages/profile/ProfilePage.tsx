@@ -4,7 +4,7 @@ import { fetchMyUser, UserState, updateMyUser, delMyUser, setToken } from "../..
 import { EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../../app/forms/editUserFormSlice";
 import { useNavigate } from "react-router-dom";
 import { UserType } from "../../common/types/userType";
-import { EditUserForm, NewPassportForm } from "./ProfileForms";
+import { EditUserForm, NewPasswordForm } from "./ProfileForms";
 import { EditPasswordFormState, toggleEditPasswordFormVisibility } from "../../app/forms/editPasswordFormSlice";
 
 export const ProfilePage = () => {
@@ -59,7 +59,7 @@ export const ProfilePage = () => {
         <div className="Page">
             <h1>Profile</h1>
             <div className="EntityContainer">
-                {isPasswordEditFormVisible ? <NewPassportForm /> : isVisible ? <EditUserForm user={formData} toggleVisibility={toggleVisibility} handleInputChange={handleInputChange} updateUser={updateUser} handleUserVisibility={handleUserVisibility}/> : <UserProperties user={user} toggleVisibility={toggleVisibility} handleDeleteUser={handleDeleteUser} />}
+                {isPasswordEditFormVisible ? <NewPasswordForm /> : isVisible ? <EditUserForm user={formData} toggleVisibility={toggleVisibility} handleInputChange={handleInputChange} updateUser={updateUser} handleUserVisibility={handleUserVisibility}/> : <UserProperties user={user} toggleVisibility={toggleVisibility} handleDeleteUser={handleDeleteUser} />}
             </div>
         </div>
     );
