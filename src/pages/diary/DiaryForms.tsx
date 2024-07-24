@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { EntryFormData, setEntryFormData } from "../../app/forms/entryFormSlice";
-import {setEditEntryFormData, getEditEntryFormData, resetEditEntryForm, EditEntryFormInterface} from "../../app/forms/editEntryFormSlice";
+import {setEditEntryFormData, resetEditEntryForm, EditEntryFormInterface} from "../../app/forms/editEntryFormSlice";
 import {updateMyEntry} from "../../app/entry/entrySlice";
 
 export const EntryForm = ({handleFormReset, formData, handleCreatingEntry}: {handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {

@@ -96,7 +96,7 @@ const Diary = ({ diary }: {diary: DiaryType}) => {
             <p>{diary.category}</p>
             <p>{diary.isPrivate ? "Private" : "Public"}</p>
             <p className="TimeP">Updated at {moment(diary.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
-            <p>{diary.description}</p>
+            <p>{diary.description.length > 50 ? diary.description.slice(0,50)+'...': diary.description}</p>
             </div>
             <div className="ButtonsContainer">
                 <button onClick={() => {navigate(`/diary/${diary.id}`)}}>Read Diary</button>
