@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyUser, UserState, updateMyUser, delMyUser, setToken } from "../app/user/userSlice";
-import { EditUserFormInterface, EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../app/forms/editUserFormSlice";
+import { fetchMyUser, UserState, updateMyUser, delMyUser, setToken } from "../../app/user/userSlice";
+import { EditUserFormState, setEditUserFormData, toggleEditUserFormVisibility, toggleUserVisibility } from "../../app/forms/editUserFormSlice";
 import { useNavigate } from "react-router-dom";
-import { UserType } from "../common/types/userType";
+import { UserType } from "../../common/types/userType";
+import { EditUserForm, NewPassportForm } from "./ProfileForms";
+import { EditPasswordFormState, toggleEditPasswordFormVisibility } from "../../app/forms/editPasswordFormSlice";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -13,6 +15,7 @@ export const ProfilePage = () => {
     const error = useSelector((state: {user: UserState}) => state.user.error);
     const isVisible = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.isVisible);
     const formData = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.formData);
+    const isPasswordEditFormVisible = useSelector((state: {editPasswordForm: EditPasswordFormState}) => state.editPasswordForm.isVisible);
 
     useEffect(() => {
         dispatch(fetchMyUser());
@@ -56,27 +59,21 @@ export const ProfilePage = () => {
         <div className="Page">
             <h1>Profile</h1>
             <div className="EntityContainer">
-                {isVisible ? <EditUserForm user={formData} toggleVisibility={toggleVisibility} handleInputChange={handleInputChange} updateUser={updateUser} handleUserVisibility={handleUserVisibility}/> : <UserProperties user={user} toggleVisibility={toggleVisibility} handleDeleteUser={handleDeleteUser} />}
+                {isPasswordEditFormVisible ? <NewPassportForm /> : isVisible ? <EditUserForm user={formData} toggleVisibility={toggleVisibility} handleInputChange={handleInputChange} updateUser={updateUser} handleUserVisibility={handleUserVisibility}/> : <UserProperties user={user} toggleVisibility={toggleVisibility} handleDeleteUser={handleDeleteUser} />}
             </div>
         </div>
     );
 }
 
-const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, handleUserVisibility}: {user: EditUserFormInterface, toggleVisibility: ()=>void, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void, updateUser: ()=>void, handleUserVisibility: ()=>void}) => {
-    return (
-        <div>
-            <p>Name: <input className="ShortTextInput" type="text" name="name" placeholder="Name" onChange={handleInputChange} value={user.name}/></p>
-            <p>Email: <input className="ShortTextInput" type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
-            <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
-            <div className="ButtonsContainer">
-                <button onClick={toggleVisibility}>Cancel</button>
-                <button onClick={updateUser}>Confirm</button>
-            </div>
-        </div>
-    );
-}
+
 
 const UserProperties = ({user, toggleVisibility, handleDeleteUser}: {user: UserType, toggleVisibility: ()=>void, handleDeleteUser:()=>void}) => {
+    const dispatch = useDispatch();
+
+    const handleTogglePasswordForm = () => {
+        dispatch(toggleEditPasswordFormVisibility())
+    }
+
     return (
         <div>
             <p>Name: {user.name}</p>
@@ -86,6 +83,7 @@ const UserProperties = ({user, toggleVisibility, handleDeleteUser}: {user: UserT
             <p>Visible: {user.visible ? 'True':'False'}  </p>
             <div className="ButtonsContainer">
                 <button onClick={toggleVisibility}>Edit User</button>
+                <button onClick={handleTogglePasswordForm}>Change Password</button>
                 <button onClick={handleDeleteUser}>Delete User</button>
             </div>
         </div>

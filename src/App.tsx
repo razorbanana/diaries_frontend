@@ -5,7 +5,7 @@ import { Topper } from './components/Topper'
 import { MyDiariesPage } from './pages/MyDiariesPage'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
-import { ProfilePage } from './pages/ProfilePage'
+import { ProfilePage } from './pages/profile/ProfilePage'
 import { DiaryPage } from './pages/DiaryPage'
 import { EntryPage } from './pages/EntryPage'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token) { 
       dispatch(setToken(token));
     }
   }, [])

@@ -1,5 +1,7 @@
 import axios from 'axios';
-import log from '../common/utils/logger';
+import ConsoleLogger from '../common/utils/logger';
+
+const logger = new ConsoleLogger();
 
 const api = axios.create({
   baseURL: 'http://localhost:3001/',
@@ -10,13 +12,14 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token'); 
-  log.info(`We are in interceptor. token: ${token ? true : false}`);
+  logger.info(`${config.method} ${config.url}`);
+  logger.info(config.data)
   if (token && token !== 'undefined') {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 }, (error) => {
-  log.error(`Request interceptor error: ${error.message}`);
+  logger.error(`Request interceptor error: ${error.message}`);
   return Promise.reject(error);
 });
 
@@ -26,7 +29,7 @@ export function withErrorHandling(fn: Function) {
       return await fn(...args);
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
-          log.error("Unauthorized request")
+        logger.error("Unauthorized request")
           error.message = "Token is expired, please login again";
       }
       throw error;

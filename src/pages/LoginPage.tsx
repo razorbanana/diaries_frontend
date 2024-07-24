@@ -3,23 +3,25 @@ import { login, register } from "../services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../app/user/userSlice";
 import { RegisterFormEntries, RegisterFormState, resetRegisterForm, setRegisterFormData, toggleRegisterForm } from "../app/forms/registerFormSlice";
-import log from "../common/utils/logger";
+import { ConsoleLogger } from "../common/utils/logger";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
     const loginEntries = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.entries);
     const regEntries = useSelector((state: {registerForm: RegisterFormState}) => state.registerForm.entries);
     const loginVisibility = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.isVisible);
+    const logger = new ConsoleLogger()
+
 
     const handleLogin = async () => {
         try {
             const token = await login(loginEntries.username, loginEntries.password);
-            log.info(`handleLogin token: ${token ? true : false}`);
+            logger.info(`handleLogin token: ${token ? true : false}`);
             dispatch(setToken(token));
             localStorage.setItem('token', token);
             handleLoginFormReset()
         } catch (err: any) {
-            log.warn(err.message);
+            logger.warn(err.message);
             handleLoginFormReset()
         }
     };
@@ -30,7 +32,7 @@ export const LoginPage = () => {
             handleRegisterFormReset()
             handleToggle()
         } catch (err: any) {
-            log.warn(err.message);
+            logger.warn(err.message);
             handleRegisterFormReset()
         }
     }

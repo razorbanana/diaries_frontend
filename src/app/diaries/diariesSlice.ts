@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DiaryType } from "../../common/types/diaryType";
 import { deleteDiary, getMyDiaries, patchDiary } from "../../services/diaries";
-import log from '../../common/utils/logger';
+import  ConsoleLogger from '../../common/utils/logger';
 import { EditDiaryFormInterface } from "../forms/editDiaryFormSlice";
+
+const log = new ConsoleLogger();
 
 export const fetchDiaries: any = createAsyncThunk('diaries/fetchDiaries', async () => {
     const response = await getMyDiaries()

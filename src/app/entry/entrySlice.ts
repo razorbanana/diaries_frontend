@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EntryType } from "../../common/types/entryType";
 import { deleteEntry, getEntry } from "../../services/entries";
-import log from '../../common/utils/logger';
+import  ConsoleLogger  from '../../common/utils/logger';
+
+const log = new ConsoleLogger();
 
 export const fetchEntry: any = createAsyncThunk('entry/fetchEntry', async (id:string) => {
     const response = await getEntry(id)
@@ -24,7 +26,14 @@ export interface EntryState {
 }
 
 const initialState: EntryState = {
-    entry: { id: '', title: '', content: '' },
+    entry: { 
+      id: '', 
+      title: '', 
+      content: '', 
+      createdAt : new Date().toISOString(),
+      updatedAt : new Date().toISOString(),
+      diaryId: '' 
+    },
     loading: false,
     error: null,
 };
@@ -55,7 +64,7 @@ const entrySlice = createSlice({
       })
       .addCase(delEntry.fulfilled, (state) => {
         state.loading = false;
-        state.entry = { id: '', title: '', content: '' };
+        state.entry = initialState.entry;
       })
       .addCase(delEntry.rejected, (state, action) => {
         state.loading = true;

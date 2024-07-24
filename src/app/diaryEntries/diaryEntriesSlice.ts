@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EntryType } from "../../common/types/entryType";
 import { getDiaryEntries } from "../../services/diaries";
-import log from '../../common/utils/logger';
+import ConsoleLogger from '../../common/utils/logger';
+
+const log = new ConsoleLogger();
 
 export const fetchDiaryEntries: any = createAsyncThunk('diaryEntries/fetchDiaryEntries', async (id:string) => {
     const response = await getDiaryEntries(id)

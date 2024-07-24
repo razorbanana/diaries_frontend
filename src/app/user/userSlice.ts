@@ -1,7 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deleteMyUser, getMyUser, patchMyUser } from '../../services/users';
-import log from '../../common/utils/logger';
+import  ConsoleLogger from '../../common/utils/logger';
 import { UserType } from '../../common/types/userType';
+
+const log = new ConsoleLogger();
 
 export const fetchMyUser: any = createAsyncThunk('user/fetchMyUser', async () => {
     const response = await getMyUser()
