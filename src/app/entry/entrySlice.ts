@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EntryType } from "../../common/types/entryType";
-import { deleteEntry, getEntry } from "../../services/entries";
+import { deleteEntry, getEntry, patchEntry } from "../../services/entries";
 import  ConsoleLogger  from '../../common/utils/logger';
+import { EditEntryFormInterface } from "../forms/editEntryFormSlice";
 
 const log = new ConsoleLogger();
 
@@ -11,6 +12,13 @@ export const fetchEntry: any = createAsyncThunk('entry/fetchEntry', async (id:st
     log.info(response)
     return response;
   });
+
+export const updateMyEntry: any = createAsyncThunk('entry/updateEntry', async (formData: EditEntryFormInterface) => {
+  const response = await patchEntry(formData.id, formData.title, formData.content)
+  log.info(`response in patchDiary`)
+  log.info(response)
+  return response;
+});
 
 export const delEntry: any = createAsyncThunk('entry/deleteEntry', async (id:string) => {
     const response = await deleteEntry(id)
@@ -55,6 +63,18 @@ const entrySlice = createSlice({
         state.entry = action.payload;
       })
       .addCase(fetchEntry.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateMyEntry.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateMyEntry.fulfilled, (state, action) => {
+        state.loading = false;
+        state.entry = action.payload
+      })
+      .addCase(updateMyEntry.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

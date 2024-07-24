@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
-import { DiaryEntriesState, fetchDiaryEntries, addEntry } from "../app/diaryEntries/diaryEntriesSlice";
-import { EntryType } from "../common/types/entryType";
-import { resetEntryForm, setEntryFormData, toggleEntryFormVisibility, EntryFormData, EntryFormState } from "../app/forms/entryFormSlice";
-import { createEntry } from "../services/entries";
-import { ToggleFormButton } from "../components/ToggleButton";
-import { delEntry } from "../app/entry/entrySlice";
+import { DiaryEntriesState, fetchDiaryEntries, addEntry } from "../../app/diaryEntries/diaryEntriesSlice";
+import { EntryType } from "../../common/types/entryType";
+import { resetEntryForm, toggleEntryFormVisibility, EntryFormState } from "../../app/forms/entryFormSlice";
+import { createEntry } from "../../services/entries";
+import { ToggleFormButton } from "../../components/ToggleButton";
+import { delEntry } from "../../app/entry/entrySlice";
 import moment from "moment";
+import { EditEntryForm, EntryForm } from "./DiaryForms";
+import { EditEntryFormState, getEditEntryFormData } from "../../app/forms/editEntryFormSlice";
 
 export const DiaryPage = () => {
     const { id } = useParams<{id: string}>();
@@ -22,12 +24,6 @@ export const DiaryPage = () => {
     useEffect(() => {
         dispatch(fetchDiaryEntries(id));
     }, [dispatch]);
-    
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        e.preventDefault();
-        const { name, value } = e.target;
-        dispatch(setEntryFormData({ name, value }));
-      };
     
       const handleFormToggle = () => {
         dispatch(toggleEntryFormVisibility());
@@ -52,22 +48,25 @@ export const DiaryPage = () => {
     return (
         <div className="Page">
             <ToggleFormButton onClick={handleFormToggle}/>
-            {isVisible ? <EntryForm handleInputChange={handleInputChange} handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
+            {isVisible ? <EntryForm handleFormReset={handleFormReset} formData={formData} handleCreatingEntry={handleCreatingEntry}/>: <></>}
             <EntryList entries={entries} handleDeleteEntry={handleDeleteEntry}/>
         </div>
     );
 }
 
 const EntryList = ({ entries, handleDeleteEntry }: {entries: EntryType[], handleDeleteEntry: ()=>void}) => {
+    const editEntryFormData = useSelector((state: {editEntryForm: EditEntryFormState}) => state.editEntryForm.formData);
+
     return(
         <div className="EntityList">
-            {entries.map((entry) => <Entry key={entry.id} entry={entry} handleDeleteEntry={handleDeleteEntry}/>)}
+            {entries.map((entry) => editEntryFormData.id !== entry.id ?<Entry key={entry.id} entry={entry} handleDeleteEntry={handleDeleteEntry}/> : <EditEntryForm key={entry.id} editEntryFormData={editEntryFormData}/>)}
         </div>
     )
 }
 
 const Entry = ({ entry, handleDeleteEntry }: {entry: EntryType, handleDeleteEntry:()=>void}) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
     return(
         <div className="EntityContainer">
             <div>
@@ -77,25 +76,10 @@ const Entry = ({ entry, handleDeleteEntry }: {entry: EntryType, handleDeleteEntr
             </div>
             <div className="ButtonsContainer">
                 <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
+                <button onClick={() => {dispatch(getEditEntryFormData(entry))}}>Update Diary</button>
                 <button onClick={() => {handleDeleteEntry}}>Delete Entry</button>
             </div>
         </div>
     )
 }
 
-const EntryForm = ({handleInputChange, handleFormReset, formData, handleCreatingEntry}: {handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {
-    return (
-        <div className="FormContainer">
-            <div className="InputContainer">
-                <input type="text" name="title" placeholder="Title" onChange={handleInputChange} value={formData.title}/>
-            </div>
-            <div className="InputContainer">
-                <textarea className="LongTextInput" name="content" placeholder="Content" onChange={handleInputChange} value={formData.content}/>
-            </div>
-            <div className="ButtonsContainer">
-                <button onClick={handleFormReset}>Reset Form</button>
-                <button onClick={handleCreatingEntry}>Submit</button>
-            </div>
-        </div>
-    )
-}

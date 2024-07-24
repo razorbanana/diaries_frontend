@@ -93,6 +93,7 @@ const Diary = ({ diary }: {diary: DiaryType}) => {
         <div className="EntityContainer">
             <div>
             <p className="TitleP">{diary.title}</p>
+            <p>{diary.category}</p>
             <p>{diary.isPrivate ? "Private" : "Public"}</p>
             <p className="TimeP">Updated at {moment(diary.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
             <p>{diary.description}</p>

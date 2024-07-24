@@ -8,6 +8,11 @@ export const getEntry = withErrorHandling(async (id: string) => {
     return response.data;
 })
 
+export const patchEntry = withErrorHandling(async (id: string, title: string, content: string) => {
+    const response = await api.patch(`/entries/single/${id}`, {title, content});
+    return response.data;
+})
+
 export const deleteEntry = withErrorHandling(async (id: string) => {
     const response = await api.delete(`/entries/single/${id}`);
     return response.data;
