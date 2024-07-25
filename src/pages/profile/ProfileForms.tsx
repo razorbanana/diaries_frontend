@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { EditUserFormState, setEditUserFormData, toggleUserVisibility } from "../../app/forms/editUserFormSlice";
 import { EditPasswordFormState, hideEditPasswordForm, setEditPasswordFormData, updatePassword } from "../../app/forms/editPasswordFormSlice";
 import { fetchMyUser, updateMyUser } from "../../app/user/userSlice";
+import { PostForm } from "../../components/PostForm";
 
 export const EditUserForm = ({toggleVisibility}: {toggleVisibility: ()=>void}) => {
     const dispatch = useDispatch();
@@ -19,22 +20,28 @@ export const EditUserForm = ({toggleVisibility}: {toggleVisibility: ()=>void}) =
         dispatch(toggleUserVisibility())
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditUserFormData({ name, value }));
     }
 
+    const inputs = [
+        {type: "text", name: "name", placeholder: "Name", handleInputChange: handleInputChange, value: formData.name},
+        {type: "text", name: "email", placeholder: "Email", handleInputChange: handleInputChange, value: formData.email}
+    ]
+
+    const buttons = [
+        {name: "Cancel", onClick: toggleVisibility},
+        {name: "Confirm", onClick: updateUser}
+    ]
+
+    const toggles = [
+        {name: "Visible", onClick: handleUserVisibility, trueText: 'True', falseText: 'False', value: formData.visible}
+    ]
+
     return (
-        <div>
-            <p>Name: <input className="ShortTextInput" type="text" name="name" placeholder="Name" onChange={handleInputChange} value={formData.name}/></p>
-            <p>Email: <input className="ShortTextInput" type="text" name="email" placeholder="Email" onChange={handleInputChange} value={formData.email}/></p>
-            <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{formData.visible ? 'True':'False'}</span></p>
-            <div className="ButtonsContainer">
-                <button onClick={toggleVisibility}>Cancel</button>
-                <button onClick={updateUser}>Confirm</button>
-            </div>
-        </div>
+        <PostForm inputs={inputs} buttons={buttons} toggles={toggles}/>
     );
 }
 
@@ -43,7 +50,7 @@ export const NewPasswordForm = () => {
     const dispatch = useDispatch();
     const { oldPassword, newPassword, confirmPassword } = useSelector((state: {editPasswordForm: EditPasswordFormState}) => state.editPasswordForm.formData);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditPasswordFormData({ name, value }));
@@ -57,16 +64,19 @@ export const NewPasswordForm = () => {
         dispatch(updatePassword({oldPassword, newPassword, confirmPassword}))
     }
 
+    const inputs = [
+        {type: "password", name: "oldPassword", placeholder: "Old Password", handleInputChange: handleInputChange, value: oldPassword},
+        {type: "password", name: "newPassword", placeholder: "New Password", handleInputChange: handleInputChange, value: newPassword},
+        {type: "password", name: "confirmPassword", placeholder: "Confirm Password", handleInputChange: handleInputChange, value: confirmPassword}
+    ]
+
+    const buttons = [
+        {name: "Cancel", onClick: cancelForm},
+        {name: "Confirm", onClick: handleConfirmPassword}
+    ]
+
     return (
-        <div>
-            <p>Old Password: <input className="ShortTextInput" type="password" name="oldPassword" placeholder="Old Password" onChange={handleInputChange} value={oldPassword}/></p>
-            <p>New Password: <input className="ShortTextInput" type="password" name="newPassword" placeholder="New Password" onChange={handleInputChange} value={newPassword}/></p>
-            <p>Confirm Password: <input className="ShortTextInput" type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleInputChange} value={confirmPassword}/></p>
-            <div className="ButtonsContainer">
-                <button onClick={cancelForm}>Cancel</button>
-                <button onClick={handleConfirmPassword}>Confirm</button>
-            </div>
-        </div>
+        <PostForm inputs={inputs} buttons={buttons}/>
     );
 }         
 

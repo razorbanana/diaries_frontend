@@ -22,14 +22,10 @@ export const ProfilePage = () => {
         dispatch(toggleEditUserFormVisibility())
     }
 
-    
-
     return (
         <div className="Page">
             <h1>Profile</h1>
-            <div className="EntityContainer">
-                {isPasswordEditFormVisible ? <NewPasswordForm /> : isVisible ? <EditUserForm toggleVisibility={toggleVisibility}/> : <UserProperties toggleVisibility={toggleVisibility}/>}
-            </div>
+            {isPasswordEditFormVisible ? <NewPasswordForm /> : isVisible ? <EditUserForm toggleVisibility={toggleVisibility}/> : <UserProperties toggleVisibility={toggleVisibility}/>}
         </div>
     );
 }
@@ -58,7 +54,7 @@ const UserProperties = ({toggleVisibility}: {toggleVisibility: ()=>void}) => {
     if (loading || user === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     return (
-        <div>
+        <div className="EntityContainer">
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
             <p>Created at: {user.createdAt.toString()}</p>

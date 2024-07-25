@@ -122,11 +122,11 @@
   font-size: 1rem;
 }
 
-.Filter>select{
+.SelectInput{
   width: 20%;
   height: 2rem;
   font-size: 1rem;
-  margin-left: 1rem;
+  margin: 0.5rem 1rem;
 }
 
 .ContentP{

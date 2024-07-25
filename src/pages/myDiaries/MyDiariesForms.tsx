@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { EditDiaryFormInterface, resetEditDiaryForm, setEditDiaryFormData} from "../../app/forms/editDiaryFormSlice";
 import { addDiary, updateMyDiary } from "../../app/diaries/diariesSlice";
-import { DiaryFormState, resetDiaryForm, setDiaryFormData } from "../../app/forms/diaryFormSlice";
+import { DiaryFormState, resetDiaryForm, setDiaryFormData, setDiaryFormPrivacy } from "../../app/forms/diaryFormSlice";
 import { createDiary } from "../../services/diaries";
 import { PostForm } from "../../components/PostForm";
 
@@ -66,7 +66,26 @@ export const DiaryForm = ({}) => {
         {name: "Submit", onClick: handleCreatingEntry}
     ]
 
+    const selects = [
+        {
+            name: "Privacy",
+            options: ["public", "private"],
+            handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
+                dispatch(setDiaryFormPrivacy(e.target.value === "public"? false:true))
+            },
+            value: formData.isPrivate ? "private":"public"
+        },
+        {
+            name: "Category",
+            options: ["general", "work", "personal"],
+            handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
+                dispatch(setDiaryFormData({name: "category", value: e.target.value}))
+            },
+            value: formData.category
+        }
+    ]
+
     return (
-        <PostForm inputs={inputs} buttons={buttons} />
+        <PostForm inputs={inputs} buttons={buttons} selects={selects}/>
     )
 }

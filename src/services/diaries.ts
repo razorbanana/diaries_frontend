@@ -1,3 +1,4 @@
+import { DiaryFormData } from '../app/forms/diaryFormSlice';
 import api from './api';
 import {withErrorHandling} from './api';
 
@@ -11,7 +12,7 @@ export const getDiaryEntries = withErrorHandling(async (id: string) => {
   return response.data;
 })
 
-export const createDiary = withErrorHandling(async (data: {title: string, description: string}) => {
+export const createDiary = withErrorHandling(async (data: DiaryFormData) => {
   const response = await api.post(`/diaries/my`, data);
   return response.data;
 })

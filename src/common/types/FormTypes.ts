@@ -10,3 +10,18 @@ export type FormButtonType = {
     name: string,
     onClick: () => void
 }
+
+export type FormToggleType = {
+    name: string,
+    onClick: () => void,
+    trueText: string,
+    falseText: string,
+    value: boolean
+}
+
+export type FormSelectType = {
+    name: string,
+    options: string[],
+    handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
+    value: string
+}

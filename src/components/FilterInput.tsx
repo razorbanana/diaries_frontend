@@ -21,7 +21,7 @@ export const FilterInput = ({types}:{types: string[]}) => {
     return (
         <div className="Filter">
             <input type="text" placeholder="Filter by name" onChange={handleInputChange} value={filterValue}/>
-            <select value={filterType} onChange={handleTypeChange}>
+            <select value={filterType} onChange={handleTypeChange} className="SelectInput">
                 {types.map((type) => (
                     <option key={type} value={type}>
                         {type}
