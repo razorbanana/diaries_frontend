@@ -5,6 +5,7 @@ import {updateMyEntry} from "../../app/entry/entrySlice";
 import {PostForm} from "../../components/PostForm";
 import { addEntry } from "../../app/diaryEntries/diaryEntriesSlice";
 import { createEntry } from "../../services/entries";
+import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";
 
 export const EntryForm = ({diaryId}: {diaryId: string} ) => {
     const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData);
@@ -20,7 +21,7 @@ export const EntryForm = ({diaryId}: {diaryId: string} ) => {
         handleFormReset()
     }
     
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEntryFormData({ name, value }));
@@ -43,7 +44,7 @@ export const EntryForm = ({diaryId}: {diaryId: string} ) => {
 
 export const EditEntryForm = ({editEntryFormData}:{editEntryFormData: EditEntryFormInterface}) => {
     const dispatch = useDispatch();
-    const handleEditDiaryFormInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleEditDiaryFormInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditEntryFormData({ name, value }));

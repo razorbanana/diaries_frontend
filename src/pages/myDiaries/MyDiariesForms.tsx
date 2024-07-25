@@ -4,10 +4,11 @@ import { addDiary, updateMyDiary } from "../../app/diaries/diariesSlice";
 import { DiaryFormState, resetDiaryForm, setDiaryFormData, setDiaryFormPrivacy } from "../../app/forms/diaryFormSlice";
 import { createDiary } from "../../services/diaries";
 import { PostForm } from "../../components/PostForm";
+import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";
 
 export const EditDiaryForm = ({editDiaryFormData}:{editDiaryFormData: EditDiaryFormInterface}) => {
     const dispatch = useDispatch();
-    const handleEditDiaryFormInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleEditDiaryFormInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditDiaryFormData({ name, value }));
@@ -38,7 +39,7 @@ export const DiaryForm = ({}) => {
     const dispatch = useDispatch();
     const formData = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.formData);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setDiaryFormData({ name, value }));

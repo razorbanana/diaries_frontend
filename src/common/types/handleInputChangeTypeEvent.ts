@@ -1,0 +1,1 @@
+export type handleInputChangeEventType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

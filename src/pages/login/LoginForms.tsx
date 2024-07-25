@@ -5,13 +5,14 @@ import { login, register } from "../../services/auth";
 import { setToken } from "../../app/user/userSlice";
 import { RegisterFormState, resetRegisterForm, setRegisterFormData } from "../../app/forms/registerFormSlice";
 import { PostForm } from "../../components/PostForm";
+import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";
 
 export const LoginForm = ({ handleToggle}: { handleToggle: ()=>void} ) => {
     const dispatch = useDispatch();
     const logger = new ConsoleLogger()
     const loginEntries = useSelector((state: {loginForm: LoginFormState}) => state.loginForm.entries);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setLoginFormData({ name, value }));
@@ -71,7 +72,7 @@ export const RegisterForm = ( {handleToggle}: { handleToggle: ()=>void} ) => {
         }
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
+    const handleInputChange = (e: handleInputChangeEventType ) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setRegisterFormData({ name, value }));

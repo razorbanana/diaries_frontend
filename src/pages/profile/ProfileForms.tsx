@@ -3,6 +3,7 @@ import { EditUserFormState, setEditUserFormData, toggleUserVisibility } from "..
 import { EditPasswordFormState, hideEditPasswordForm, setEditPasswordFormData, updatePassword } from "../../app/forms/editPasswordFormSlice";
 import { fetchMyUser, updateMyUser } from "../../app/user/userSlice";
 import { PostForm } from "../../components/PostForm";
+import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";
 
 export const EditUserForm = ({toggleVisibility}: {toggleVisibility: ()=>void}) => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export const EditUserForm = ({toggleVisibility}: {toggleVisibility: ()=>void}) =
         dispatch(toggleUserVisibility())
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
+    const handleInputChange = (e: handleInputChangeEventType ) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditUserFormData({ name, value }));
@@ -50,7 +51,7 @@ export const NewPasswordForm = () => {
     const dispatch = useDispatch();
     const { oldPassword, newPassword, confirmPassword } = useSelector((state: {editPasswordForm: EditPasswordFormState}) => state.editPasswordForm.formData);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: handleInputChangeEventType) => {
         e.preventDefault();
         const { name, value } = e.target;
         dispatch(setEditPasswordFormData({ name, value }));
