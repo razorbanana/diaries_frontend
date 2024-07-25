@@ -11,7 +11,6 @@ export const MyDiariesPage = () => {
     
     const isVisible = useSelector((state: {diaryForm: DiaryFormState}) => state.diaryForm.isVisible);
     
-
     useEffect(() => {
         console.log("fetching diaries")
         dispatch(fetchDiaries());

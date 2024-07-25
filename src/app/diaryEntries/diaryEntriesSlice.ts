@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EntryType } from "../../common/types/entryType";
 import { getDiaryEntries } from "../../services/diaries";
 import ConsoleLogger from '../../common/utils/logger';
-import { updateMyEntry } from "../entry/entrySlice";
+import { delEntry, updateMyEntry } from "../entry/entrySlice";
 
 const log = new ConsoleLogger();
 
@@ -51,7 +51,12 @@ const diaryEntriesSlice = createSlice({
         state.loading = false;
         const newEntries = state.entries.map(entry => entry.id === action.payload.id ? action.payload : entry)
         state.entries = newEntries
-      });
+      })
+      .addCase(delEntry.fulfilled, (state, action) => {
+        state.loading = false;
+        const newEntries = state.entries.filter(entry => entry.id !== action.payload.id)
+        state.entries = newEntries;
+      })
   },
 });
 

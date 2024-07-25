@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
-import { delEntry, EntryState, fetchEntry } from "../app/entry/entrySlice";
+import { delEntry, EntryState, fetchEntry } from "../../app/entry/entrySlice";
 import moment from "moment";
+import { EntryType } from "../../common/types/entryType";
 
 export const EntryPage = () => {
-    const navigate = useNavigate();
     const { id } = useParams<{id: string}>();
     const dispatch = useDispatch();
     const entry = useSelector((state: {entry: EntryState}) => state.entry.entry);
@@ -15,14 +15,25 @@ export const EntryPage = () => {
     useEffect(() => {
         dispatch(fetchEntry(id));
     }, [dispatch]);
-    
-    const handleDelete = () => {
-        dispatch(delEntry(id))
-        navigate("/my-diaries")
-    }
 
     if (loading || entry === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
+    
+    return (
+        <Entry entry={entry}/>
+    )
+}
+
+const Entry = ({entry} : {entry: EntryType}) => {
+    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleDelete = () => {
+        dispatch(delEntry(entry.id))
+        navigate("/my-diaries")
+    }
+
     return (
         <div className="Page">
             <div className="EntityContainer">

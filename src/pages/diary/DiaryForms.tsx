@@ -1,13 +1,25 @@
-import { useDispatch } from "react-redux";
-import { EntryFormData, setEntryFormData } from "../../app/forms/entryFormSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { EntryFormState, resetEntryForm, setEntryFormData } from "../../app/forms/entryFormSlice";
 import {setEditEntryFormData, resetEditEntryForm, EditEntryFormInterface} from "../../app/forms/editEntryFormSlice";
 import {updateMyEntry} from "../../app/entry/entrySlice";
 import {PostForm} from "../../components/PostForm";
+import { addEntry } from "../../app/diaryEntries/diaryEntriesSlice";
+import { createEntry } from "../../services/entries";
 
-export const EntryForm = ({handleFormReset, formData, handleCreatingEntry}: {handleFormReset: ()=>void, formData: EntryFormData, handleCreatingEntry: ()=>void} ) => {
-    
+export const EntryForm = ({diaryId}: {diaryId: string} ) => {
+    const formData = useSelector((state: {entryForm: EntryFormState}) => state.entryForm.formData);
     const dispatch = useDispatch();
 
+    const handleFormReset = () => {
+        dispatch(resetEntryForm());
+      };
+
+    const handleCreatingEntry = async () => {
+        const response = await createEntry(diaryId, formData)
+        dispatch(addEntry({entry: response}))
+        handleFormReset()
+    }
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
         const { name, value } = e.target;

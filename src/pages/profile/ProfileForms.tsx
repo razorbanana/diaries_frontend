@@ -1,13 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
-import { EditUserFormInterface } from "../../app/forms/editUserFormSlice";
+import { EditUserFormState, setEditUserFormData, toggleUserVisibility } from "../../app/forms/editUserFormSlice";
 import { EditPasswordFormState, hideEditPasswordForm, setEditPasswordFormData, updatePassword } from "../../app/forms/editPasswordFormSlice";
+import { fetchMyUser, updateMyUser } from "../../app/user/userSlice";
 
-export const EditUserForm = ({user, toggleVisibility, handleInputChange, updateUser, handleUserVisibility}: {user: EditUserFormInterface, toggleVisibility: ()=>void, handleInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void, updateUser: ()=>void, handleUserVisibility: ()=>void}) => {
+export const EditUserForm = ({toggleVisibility}: {toggleVisibility: ()=>void}) => {
+    const dispatch = useDispatch();
+    const formData = useSelector((state: {editUserForm: EditUserFormState}) => state.editUserForm.formData);
+
+    const updateUser = () => {
+        dispatch(updateMyUser(formData)).then(() => {
+            toggleVisibility()
+            dispatch(fetchMyUser());
+        })
+        
+    }
+
+    const handleUserVisibility = () => {
+        dispatch(toggleUserVisibility())
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        dispatch(setEditUserFormData({ name, value }));
+    }
+
     return (
         <div>
-            <p>Name: <input className="ShortTextInput" type="text" name="name" placeholder="Name" onChange={handleInputChange} value={user.name}/></p>
-            <p>Email: <input className="ShortTextInput" type="text" name="email" placeholder="Email" onChange={handleInputChange} value={user.email}/></p>
-            <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{user.visible ? 'True':'False'}</span></p>
+            <p>Name: <input className="ShortTextInput" type="text" name="name" placeholder="Name" onChange={handleInputChange} value={formData.name}/></p>
+            <p>Email: <input className="ShortTextInput" type="text" name="email" placeholder="Email" onChange={handleInputChange} value={formData.email}/></p>
+            <p>Visible: <span className="ToggleSpan" onClick={handleUserVisibility}>{formData.visible ? 'True':'False'}</span></p>
             <div className="ButtonsContainer">
                 <button onClick={toggleVisibility}>Cancel</button>
                 <button onClick={updateUser}>Confirm</button>

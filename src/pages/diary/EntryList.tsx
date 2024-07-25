@@ -4,18 +4,25 @@ import { EntryType } from "../../common/types/entryType";
 import moment from "moment";
 import { EditEntryFormState, getEditEntryFormData } from "../../app/forms/editEntryFormSlice";
 import { EditEntryForm } from "./DiaryForms";
+import { delEntry } from "../../app/entry/entrySlice";
+import { DiaryEntriesState } from "../../app/diaryEntries/diaryEntriesSlice";
 
-export const EntryList = ({ entries, handleDeleteEntry }: {entries: EntryType[], handleDeleteEntry: ()=>void}) => {
+export const EntryList = () => {
     const editEntryFormData = useSelector((state: {editEntryForm: EditEntryFormState}) => state.editEntryForm.formData);
-
+    const entries = useSelector((state: {diaryEntries: DiaryEntriesState}) =>  state.diaryEntries.entries);
+    const loading = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.loading);
+    const error = useSelector((state: {diaryEntries: DiaryEntriesState}) => state.diaryEntries.error);
+    
+    if (loading || entries === undefined) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
     return(
         <div className="EntityList">
-            {entries.map((entry) => editEntryFormData.id !== entry.id ?<Entry key={entry.id} entry={entry} handleDeleteEntry={handleDeleteEntry}/> : <EditEntryForm key={entry.id} editEntryFormData={editEntryFormData}/>)}
+            {entries.map((entry) => editEntryFormData.id !== entry.id ?<Entry key={entry.id} entry={entry}/> : <EditEntryForm key={entry.id} editEntryFormData={editEntryFormData}/>)}
         </div>
     )
 }
 
-const Entry = ({ entry, handleDeleteEntry }: {entry: EntryType, handleDeleteEntry:()=>void}) => {
+const Entry = ({ entry }: {entry: EntryType}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     return(
@@ -28,7 +35,7 @@ const Entry = ({ entry, handleDeleteEntry }: {entry: EntryType, handleDeleteEntr
             <div className="ButtonsContainer">
                 <button onClick={() => {navigate(`/entry/${entry.id}`)}}>Read Entry</button>
                 <button onClick={() => {dispatch(getEditEntryFormData(entry))}}>Update Diary</button>
-                <button onClick={() => {handleDeleteEntry}}>Delete Entry</button>
+                <button onClick={() => dispatch(delEntry(entry.id))}>Delete Entry</button>
             </div>
         </div>
     )
