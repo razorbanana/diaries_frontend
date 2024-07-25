@@ -11,6 +11,7 @@ import editUserFormReducer from './forms/editUserFormSlice'
 import editDiaryFormReducer from './forms/editDiaryFormSlice'
 import editPasswordFormReducer from './forms/editPasswordFormSlice'
 import editEntryFormReducer from './forms/editEntryFormSlice'
+import filterReducer from './filter/filterSlice'
 
 export const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ export const store = configureStore({
     editUserForm: editUserFormReducer,
     editDiaryForm: editDiaryFormReducer,
     editPasswordForm: editPasswordFormReducer,
-    editEntryForm: editEntryFormReducer
+    editEntryForm: editEntryFormReducer,
+    filter: filterReducer,
   },
 })
 

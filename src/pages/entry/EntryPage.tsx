@@ -40,7 +40,7 @@ const Entry = ({entry} : {entry: EntryType}) => {
                 <div>
                     <p className="TitleP">{entry.title}</p>
                     <p className="TimeP">Updated at {moment(entry.updatedAt).format('YYYY-MM-DD HH:mm')}</p>
-                    <p>{entry.content}</p>
+                    <p className="ContentP">{entry.content}</p>
                 </div>
                 <div className="ButtonsContainer">
                     <button onClick={handleDelete}>Delete Entry</button>

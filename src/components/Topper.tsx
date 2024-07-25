@@ -8,6 +8,7 @@ import { ReturnButton } from "../components/ReturnButton";
 import { hideEditDiaryForm } from "../app/forms/editDiaryFormSlice";
 import { hideEditEntryForm } from "../app/forms/editEntryFormSlice";
 import { hideEditPasswordForm } from "../app/forms/editPasswordFormSlice";
+import { resetFilter } from "../app/filter/filterSlice";
 
 export const Topper = () => {
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ export const Topper = () => {
         dispatch(hideDiaryForm())
         dispatch(hideEntryForm())
         dispatch(hideEditUserForm())
+        dispatch(resetFilter())
     }
 
     return (

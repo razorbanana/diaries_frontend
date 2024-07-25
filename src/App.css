@@ -107,3 +107,28 @@
   font-style: italic;
   color: white;
 }
+
+.Filter{
+  width: 700px;
+  background-color: #313131;
+  padding: 1em;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+
+.Filter>input{
+  width: 70%;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.Filter>select{
+  width: 20%;
+  height: 2rem;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.ContentP{
+  word-break: break-word;
+}

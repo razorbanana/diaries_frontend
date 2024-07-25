@@ -13,8 +13,8 @@ export const PostForm = ({inputs, buttons}:{inputs: FormInputType[], buttons: Fo
                         )
                     }else if (input.type === "textarea") {
                         return (
-                            <div className="InputContainer">
-                                <textarea className="LongTextInput" name={input.name} placeholder={input.name} onChange={input.handleInputChange} value={input.value}/>
+                            <div className="InputContainer" key={input.name}>
+                                <textarea className="LongTextInput" name={input.name} placeholder={input.placeholder} onChange={input.handleInputChange} value={input.value}/>
                             </div>
                         )
                     }else if (input.type === "password") {
