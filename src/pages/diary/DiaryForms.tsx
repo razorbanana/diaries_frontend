@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { EntryFormState, resetEntryForm, setEntryFormData } from "../../app/forms/entryFormSlice";
-import {setEditEntryFormData, resetEditEntryForm, EditEntryFormInterface} from "../../app/forms/editEntryFormSlice";
+import { EntryFormState, resetEntryForm, setEntryFormData } from "../../app/diaryEntries/entryFormSlice";
+import {setEditEntryFormData, resetEditEntryForm, EditEntryFormInterface} from "../../app/diaryEntries/editEntryFormSlice";
 import {updateMyEntry} from "../../app/entry/entrySlice";
 import {PostForm} from "../../components/PostForm";
 import { addEntry } from "../../app/diaryEntries/diaryEntriesSlice";

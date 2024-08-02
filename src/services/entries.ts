@@ -1,5 +1,5 @@
 import api from './api';
-import {EntryFormData} from "../app/forms/entryFormSlice";
+import {EntryFormData} from "../app/diaryEntries/entryFormSlice";
 import {withErrorHandling} from './api';
 
 

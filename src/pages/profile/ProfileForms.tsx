@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { EditUserFormState, setEditUserFormData, toggleUserVisibility } from "../../app/forms/editUserFormSlice";
-import { EditPasswordFormState, hideEditPasswordForm, setEditPasswordFormData, updatePassword } from "../../app/forms/editPasswordFormSlice";
+import { EditUserFormState, setEditUserFormData, toggleUserVisibility } from "../../app/user/editUserFormSlice";
+import { EditPasswordFormState, hideEditPasswordForm, setEditPasswordFormData, updatePassword } from "../../app/user/editPasswordFormSlice";
 import { fetchMyUser, updateMyUser } from "../../app/user/userSlice";
 import { PostForm } from "../../components/PostForm";
 import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";

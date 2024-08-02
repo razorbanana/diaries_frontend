@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyUser, UserState, delMyUser, setToken } from "../../app/user/userSlice";
-import { EditUserFormState, toggleEditUserFormVisibility } from "../../app/forms/editUserFormSlice";
+import { EditUserFormState, toggleEditUserFormVisibility } from "../../app/user/editUserFormSlice";
 import { useNavigate } from "react-router-dom";
 import { EditUserForm, NewPasswordForm } from "./ProfileForms";
-import { EditPasswordFormState, toggleEditPasswordFormVisibility } from "../../app/forms/editPasswordFormSlice";
+import { EditPasswordFormState, toggleEditPasswordFormVisibility } from "../../app/user/editPasswordFormSlice";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();

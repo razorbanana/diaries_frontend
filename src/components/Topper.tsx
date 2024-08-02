@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { setToken } from "../app/user/userSlice";
-import { hideDiaryForm } from "../app/forms/diaryFormSlice";
-import { hideEntryForm } from "../app/forms/entryFormSlice";
-import { hideEditUserForm } from "../app/forms/editUserFormSlice";
+import { hideDiaryForm } from "../app/diaries/diaryFormSlice";
+import { hideEntryForm } from "../app/diaryEntries/entryFormSlice";
+import { hideEditUserForm } from "../app/user/editUserFormSlice";
 import { ReturnButton } from "../components/ReturnButton";
-import { hideEditDiaryForm } from "../app/forms/editDiaryFormSlice";
-import { hideEditEntryForm } from "../app/forms/editEntryFormSlice";
-import { hideEditPasswordForm } from "../app/forms/editPasswordFormSlice";
+import { hideEditDiaryForm } from "../app/diaries/editDiaryFormSlice";
+import { hideEditEntryForm } from "../app/diaryEntries/editEntryFormSlice";
+import { hideEditPasswordForm } from "../app/user/editPasswordFormSlice";
 import { resetFilter } from "../app/filter/filterSlice";
 
 export const Topper = () => {

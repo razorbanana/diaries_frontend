@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchMyUser } from '../user/userSlice';
+import { fetchMyUser } from './userSlice';
 
 export interface EditUserFormInterface {
   email: string;

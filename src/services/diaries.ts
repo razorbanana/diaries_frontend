@@ -1,4 +1,4 @@
-import { DiaryFormData } from '../app/forms/diaryFormSlice';
+import { DiaryFormData } from '../app/diaries/diaryFormSlice';
 import api from './api';
 import {withErrorHandling} from './api';
 

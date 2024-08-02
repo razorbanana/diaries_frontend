@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import ConsoleLogger from '../../common/utils/logger';
-import { getComments } from "../../services/comments";
+import { deleteComment, getComments, patchComment } from "../../services/comments";
 import { CommentType } from "../../common/types/CommentType";
 
 const log = new ConsoleLogger();
@@ -11,6 +11,20 @@ export const fetchComments: any = createAsyncThunk('comments/fetchComments', asy
     log.info(response)
     return response;
   });
+
+export const updateComment: any = createAsyncThunk('comments/updateComment', async (comment: CommentType) => {
+    const response = await patchComment(comment)
+    log.info(`response in updateComment`)
+      log.info(response)
+      return response;
+})
+
+export const delComment: any = createAsyncThunk('comments/delComment', async (id: string) => {
+  const response = await deleteComment(id)
+  log.info(`response in delComment`)
+    log.info(response)
+    return response;
+})
 
 export interface CommentsState {
     comments: CommentType[];
@@ -46,16 +60,16 @@ const commentsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-    //   .addCase(updateMyEntry.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     const newEntries = state.entries.map(entry => entry.id === action.payload.id ? action.payload : entry)
-    //     state.entries = newEntries
-    //   })
-    //   .addCase(delEntry.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     const newEntries = state.entries.filter(entry => entry.id !== action.payload.id)
-    //     state.entries = newEntries;
-    //   })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.loading = false;
+        const newEntries = state.comments.map(comment => comment.id === action.payload.id ? action.payload : comment)
+        state.comments = newEntries
+      })
+      .addCase(delComment.fulfilled, (state, action) => {
+        state.loading = false;
+        const newEntries = state.comments.filter(comment => comment.id !== action.payload.id)
+        state.comments = newEntries;
+      })
   },
 });
 

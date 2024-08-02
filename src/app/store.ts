@@ -2,18 +2,19 @@ import { configureStore } from '@reduxjs/toolkit'
 import diariesReducer from './diaries/diariesSlice'
 import diaryEntriesReducer from './diaryEntries/diaryEntriesSlice'
 import entryReducer from './entry/entrySlice'
-import entryFormReducer from './forms/entryFormSlice'
+import entryFormReducer from './diaryEntries/entryFormSlice'
 import loginFormReducer from './forms/loginFormSlice'
 import userReducer from './user/userSlice'
 import registerReducer from './forms/registerFormSlice'
-import diaryFormReducer from './forms/diaryFormSlice'
-import editUserFormReducer from './forms/editUserFormSlice'
-import editDiaryFormReducer from './forms/editDiaryFormSlice'
-import editPasswordFormReducer from './forms/editPasswordFormSlice'
-import editEntryFormReducer from './forms/editEntryFormSlice'
+import diaryFormReducer from './diaries/diaryFormSlice'
+import editUserFormReducer from './user/editUserFormSlice'
+import editDiaryFormReducer from './diaries/editDiaryFormSlice'
+import editPasswordFormReducer from './user/editPasswordFormSlice'
+import editEntryFormReducer from './diaryEntries/editEntryFormSlice'
 import filterReducer from './filter/filterSlice'
-import postCommentFormReducer from './forms/postCommentFormSlice'
+import postCommentFormReducer from './comments/postCommentFormSlice'
 import commentsReducer from './comments/commentsSlice'
+import editCommentFormReducer from './comments/editCommentFormSlice'
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +32,8 @@ export const store = configureStore({
     editEntryForm: editEntryFormReducer,
     filter: filterReducer,
     postCommentForm: postCommentFormReducer,
-    comments: commentsReducer
+    comments: commentsReducer,
+    editCommentForm: editCommentFormReducer,
   },
 })
 

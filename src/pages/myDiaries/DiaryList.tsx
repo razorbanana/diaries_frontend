@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DiaryType } from "../../common/types/diaryType";
 import moment from "moment";
-import { EditDiaryFormState, getEditDiaryFormData } from "../../app/forms/editDiaryFormSlice";
+import { EditDiaryFormState, getEditDiaryFormData } from "../../app/diaries/editDiaryFormSlice";
 import { delDiary, DiariesState } from "../../app/diaries/diariesSlice";
 import { EditDiaryForm } from "./MyDiariesForms";
 import { FilterState, resetFilter } from "../../app/filter/filterSlice";

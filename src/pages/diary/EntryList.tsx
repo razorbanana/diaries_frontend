@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { EntryType } from "../../common/types/entryType";
 import moment from "moment";
-import { EditEntryFormState, getEditEntryFormData } from "../../app/forms/editEntryFormSlice";
+import { EditEntryFormState, getEditEntryFormData } from "../../app/diaryEntries/editEntryFormSlice";
 import { EditEntryForm } from "./DiaryForms";
 import { delEntry } from "../../app/entry/entrySlice";
 import { DiaryEntriesState } from "../../app/diaryEntries/diaryEntriesSlice";

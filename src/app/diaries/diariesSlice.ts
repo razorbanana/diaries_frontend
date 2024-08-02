@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DiaryType } from "../../common/types/diaryType";
 import { deleteDiary, getMyDiaries, patchDiary } from "../../services/diaries";
 import  ConsoleLogger from '../../common/utils/logger';
-import { EditDiaryFormInterface } from "../forms/editDiaryFormSlice";
+import { EditDiaryFormInterface } from "./editDiaryFormSlice";
 
 const log = new ConsoleLogger();
 

@@ -2,7 +2,7 @@ import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiaries } from "../../app/diaries/diariesSlice";
 import { ToggleFormButton } from "../../components/ToggleButton";
-import { toggleDiaryFormVisibility, DiaryFormState } from "../../app/forms/diaryFormSlice";
+import { toggleDiaryFormVisibility, DiaryFormState } from "../../app/diaries/diaryFormSlice";
 import { DiaryForm} from "./MyDiariesForms";
 import { DiaryList } from "./DiaryList";
 

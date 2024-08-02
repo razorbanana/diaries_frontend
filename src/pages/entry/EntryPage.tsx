@@ -5,7 +5,7 @@ import { delEntry, EntryState, fetchEntry } from "../../app/entry/entrySlice";
 import moment from "moment";
 import { EntryType } from "../../common/types/entryType";
 import { ToggleFormButton } from "../../components/ToggleButton";
-import { PostCommentFormState, togglePostCommentFormVisibility } from "../../app/forms/postCommentFormSlice";
+import { PostCommentFormState, togglePostCommentFormVisibility } from "../../app/comments/postCommentFormSlice";
 import { PostCommentForm } from "./EntryForms";
 import { CommentList } from "./CommentList";
 

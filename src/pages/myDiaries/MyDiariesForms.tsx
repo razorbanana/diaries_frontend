@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { EditDiaryFormInterface, resetEditDiaryForm, setEditDiaryFormData} from "../../app/forms/editDiaryFormSlice";
+import { EditDiaryFormInterface, resetEditDiaryForm, setEditDiaryFormData} from "../../app/diaries/editDiaryFormSlice";
 import { addDiary, updateMyDiary } from "../../app/diaries/diariesSlice";
-import { DiaryFormState, resetDiaryForm, setDiaryFormData, setDiaryFormPrivacy } from "../../app/forms/diaryFormSlice";
+import { DiaryFormState, resetDiaryForm, setDiaryFormData, setDiaryFormPrivacy } from "../../app/diaries/diaryFormSlice";
 import { createDiary } from "../../services/diaries";
 import { PostForm } from "../../components/PostForm";
 import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";

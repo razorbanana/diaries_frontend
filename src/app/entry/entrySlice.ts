@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EntryType } from "../../common/types/entryType";
 import { deleteEntry, getEntry, patchEntry } from "../../services/entries";
 import  ConsoleLogger  from '../../common/utils/logger';
-import { EditEntryFormInterface } from "../forms/editEntryFormSlice";
+import { EditEntryFormInterface } from "../diaryEntries/editEntryFormSlice";
 
 const log = new ConsoleLogger();
 
