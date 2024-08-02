@@ -10,3 +10,8 @@ export const createComment = withErrorHandling(async (entryId: string, formData:
     const response = await api.post(`/comments`, dataToSend);
     return response.data;
 })
+
+export const getComments = withErrorHandling(async (entryId: string) => {
+    const response = await api.get(`/comments/${entryId}`);
+    return response.data;
+})

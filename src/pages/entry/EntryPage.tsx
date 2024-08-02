@@ -7,6 +7,7 @@ import { EntryType } from "../../common/types/entryType";
 import { ToggleFormButton } from "../../components/ToggleButton";
 import { PostCommentFormState, togglePostCommentFormVisibility } from "../../app/forms/postCommentFormSlice";
 import { PostCommentForm } from "./EntryForms";
+import { CommentList } from "./CommentList";
 
 export const EntryPage = () => {
     const { id } = useParams<{id: string}>();
@@ -57,6 +58,7 @@ const Entry = ({entry} : {entry: EntryType}) => {
             </div>
             <ToggleFormButton onClick={handleFormToggle}/>
             {postCommentFormVisibility?<PostCommentForm entryId={entry.id}/>:<></>}
+            <CommentList entryId={entry.id}/>
         </div>
     );
 }

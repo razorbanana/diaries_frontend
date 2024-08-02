@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { PostCommentFormData, PostCommentFormState, resetPostCommentForm, setPostCommentFormData, togglePostCommentFormVisibility } from "../../app/forms/postCommentFormSlice";
+import { PostCommentFormState, resetPostCommentForm, setPostCommentFormData, togglePostCommentFormVisibility } from "../../app/forms/postCommentFormSlice";
 import { PostForm } from "../../components/PostForm"
 import { handleInputChangeEventType } from "../../common/types/handleInputChangeTypeEvent";
 import {createComment } from "../../services/comments";
+import { addComment } from "../../app/comments/commentsSlice";
 
 export const PostCommentForm = ({entryId}:{entryId:string}) => {
 
@@ -18,7 +19,7 @@ export const PostCommentForm = ({entryId}:{entryId:string}) => {
 
     const handleCreatingComment = async () => {
         const response = await createComment(entryId, formData)
-        //dispatch(addComment({entry: response}))
+        dispatch(addComment({comment: response}))
         dispatch(resetPostCommentForm())
     }
 
