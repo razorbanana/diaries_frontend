@@ -27,8 +27,8 @@ const Inputs = ({inputs}:{inputs: FormInputType[]}) => {
                     }else if (input.type === "textarea") {
                         return (
                             <div className="InputContainer" key={input.name}>
-                                <label>{input.placeholder}: </label>
-                                <textarea className="LongTextInput" name={input.name} placeholder={input.placeholder} onChange={input.handleInputChange} value={input.value}/>
+                                <label htmlFor={input.name}>{input.placeholder}: </label>
+                                <textarea className="LongTextInput" id={input.name} name={input.name} placeholder={input.placeholder} onChange={input.handleInputChange} value={input.value}/>
                             </div>
                         )
                     }else if (input.type === "password") {
