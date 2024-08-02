@@ -6,7 +6,6 @@ import { EditDiaryFormState, getEditDiaryFormData } from "../../app/diaries/edit
 import { delDiary, DiariesState } from "../../app/diaries/diariesSlice";
 import { EditDiaryForm } from "./MyDiariesForms";
 import { FilterState, resetFilter } from "../../app/filter/filterSlice";
-import { FilterInput } from "../../components/FilterInput";
 
 export const DiaryList = ({}) => {
     const diaries = useSelector((state: {diaries: DiariesState}) =>  state.diaries.diaries);
@@ -34,9 +33,9 @@ export const DiaryList = ({}) => {
 
     if (loading || diaries === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
+    if(filteredDiaries.length === 0) return <p>No filtered diaries found</p>
     return (
         <div className="EntityList">
-            <FilterInput types={['title', 'description', 'date', 'category']}/>
             {filteredDiaries.map((diary) => editDiaryFormData.id === diary.id ? <EditDiaryForm editDiaryFormData={editDiaryFormData} key={diary.id}/>:<Diary key={diary.id} diary={diary}/>)}
         </div>
     );

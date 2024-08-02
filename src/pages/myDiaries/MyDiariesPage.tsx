@@ -5,6 +5,7 @@ import { ToggleFormButton } from "../../components/ToggleButton";
 import { toggleDiaryFormVisibility, DiaryFormState } from "../../app/diaries/diaryFormSlice";
 import { DiaryForm} from "./MyDiariesForms";
 import { DiaryList } from "./DiaryList";
+import { FilterInput } from "../../components/FilterInput";
 
 export const MyDiariesPage = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export const MyDiariesPage = () => {
         <div className="Page">
             <ToggleFormButton onClick={handleFormToggle}/>
             {isVisible ? <DiaryForm />: <></>}
+            <FilterInput types={['title', 'description', 'date', 'category']}/>
             <DiaryList/>
         </div>
     );

@@ -6,6 +6,7 @@ import { toggleEntryFormVisibility, EntryFormState } from "../../app/diaryEntrie
 import { ToggleFormButton } from "../../components/ToggleButton";
 import { EntryForm } from "./DiaryForms";
 import { EntryList } from "./EntryList";
+import { FilterInput } from "../../components/FilterInput";
 
 export const DiaryPage = () => {
     const { id } = useParams<{id: string}>();
@@ -26,6 +27,7 @@ export const DiaryPage = () => {
         <div className="Page">
             <ToggleFormButton onClick={handleFormToggle}/>
             {isVisible ? <EntryForm diaryId={id}/>: <></>}
+            <FilterInput types={['title', 'content', 'date']}/>
             <EntryList />
         </div>
     );

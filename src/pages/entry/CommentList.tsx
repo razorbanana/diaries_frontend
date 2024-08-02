@@ -16,6 +16,7 @@ export const CommentList = ({entryId} : {entryId: string}) => {
         dispatch(fetchComments(entryId));
     }, [dispatch])
 
+    if(comments.length === 0) return <p>No comments found</p>
     return (
         <div className="EntityList">
             {comments.map((comment) => comment.id === editedComment.id? <EditCommentForm editCommentFormData={editedComment}/>: <Comment key={comment.id} comment={comment}/>)}

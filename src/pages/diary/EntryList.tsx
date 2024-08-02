@@ -6,7 +6,6 @@ import { EditEntryFormState, getEditEntryFormData } from "../../app/diaryEntries
 import { EditEntryForm } from "./DiaryForms";
 import { delEntry } from "../../app/entry/entrySlice";
 import { DiaryEntriesState } from "../../app/diaryEntries/diaryEntriesSlice";
-import { FilterInput } from "../../components/FilterInput";
 import { FilterState, resetFilter } from "../../app/filter/filterSlice";
 
 export const EntryList = () => {
@@ -32,9 +31,9 @@ export const EntryList = () => {
     
     if (loading || entries === undefined) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
+    if(filteredEntries.length === 0) return <p>No entries found</p>
     return(
             <div className="EntityList">
-                <FilterInput types={['title', 'content', 'date']}/>
                 {filteredEntries.map((entry) => editEntryFormData.id !== entry.id ?<Entry key={entry.id} entry={entry}/> : <EditEntryForm key={entry.id} editEntryFormData={editEntryFormData}/>)}
             </div>
     )
